@@ -3,10 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'payment_bloc.dart';
 import 'payment_event.dart';
 import 'payment_state.dart';
-import 'reservation_bloc.dart';
-import 'reservation_event.dart';
-import 'reservation_state.dart';
-import 'reservation_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Reservation + Payment',
+      title: 'Payment Page',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       home: BlocProvider(
         create: (context) => PaymentBloc(),
-        child: ReservationPage(),
+        child: PaymentPage(),
       ),
     );
   }
@@ -82,7 +78,7 @@ class PaymentPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 245, 246, 245),
+                  color: const Color.fromARGB(255, 236, 241, 238),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
