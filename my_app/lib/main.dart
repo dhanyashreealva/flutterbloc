@@ -69,7 +69,7 @@ class PaymentPage extends StatelessWidget {
                       '₹$amount',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                        color: const Color.fromARGB(255, 76, 175, 80),
                       ),
                     ),
                   ],
@@ -78,7 +78,7 @@ class PaymentPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 236, 241, 238),
+                  color: const Color.fromARGB(255, 245, 246, 245),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -175,7 +175,8 @@ class PaymentPage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 235, 238, 235),
+                      backgroundColor: const Color.fromARGB(255, 3, 99, 3),
+                      foregroundColor: Colors.white,  
                       padding: EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
