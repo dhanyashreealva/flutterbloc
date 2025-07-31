@@ -78,16 +78,22 @@ class PaymentPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: const Color.fromARGB(255, 236, 241, 238),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
                   children: [
                     ListTile(
-                      leading: Text('🇮🇳', style: TextStyle(fontSize: 20)),
-                      title: Text('UPI', style: TextStyle(fontWeight: FontWeight.bold)),
+                    leading: Image.asset(
+                         'assets/images/upi_logo.png',
+                       width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
+                      ),
+                     title: Text('UPI', style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
-                    buildUPIOption(context, 'PhonePe', Icons.account_balance_wallet_outlined),
+
+                    buildUPIOption(context, 'PhonePe', Icons.account_balance_outlined),
                     buildUPIOption(context, 'Google Pay', Icons.payment),
                     buildUPIOption(context, 'Paytm', Icons.account_balance),
                   ],
@@ -147,14 +153,21 @@ class PaymentPage extends StatelessWidget {
         return Column(
           children: [
             RadioListTile(
-              value: name,
-              groupValue: selectedUPI,
-              onChanged: isProcessing ? null : (value) {
-                context.read<PaymentBloc>().add(SelectUPIProvider(value.toString()));
-              },
-              title: Text(name),
-              secondary: Icon(icon),
-            ),
+             value: name,
+            groupValue: selectedUPI,
+             onChanged: isProcessing ? null : (value) {
+             context.read<PaymentBloc>().add(SelectUPIProvider(value.toString()));
+           },
+          title: Text(name),
+              secondary: name == 'PhonePe'
+            ? Image.asset('assets/images/phonepe_logo.png', width: 24, height: 24)
+              : name == 'Google Pay'
+             ? Image.asset('assets/images/googlepay_logo.png', width: 24, height: 24)
+              : name == 'Paytm'
+              ? Image.asset('assets/images/paytm_logo.png', width: 24, height: 24)
+              : Icon(icon),
+         ),
+
             if (selectedUPI == name)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),

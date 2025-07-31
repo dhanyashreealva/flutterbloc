@@ -58,6 +58,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/phonepe_logo.png
+    - assets/images/googlepay_logo.png
+    - assets/images/paytm_logo.png
+    - assets/images/upi_logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
