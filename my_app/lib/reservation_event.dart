@@ -33,3 +33,15 @@ class SelectTimeSlot extends ReservationEvent {
   @override
   List<Object> get props => [slot];
 }
+
+class ResetReservation extends ReservationEvent {
+  const ResetReservation();
+}
+
+class SubmitReservation extends ReservationEvent {
+  const SubmitReservation();
+}
+
+class LoadTimeSlots extends ReservationEvent {
+  const LoadTimeSlots();
+}
