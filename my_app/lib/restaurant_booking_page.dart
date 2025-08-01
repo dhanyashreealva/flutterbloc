@@ -68,6 +68,9 @@ class RestaurantBookingPage extends StatelessWidget {
           ),
         ),
         
+        // Spacing between orange container and time slots
+        SizedBox(height: 8),
+        
         // Time Slots Section (outside orange container)
         Expanded(
           child: _buildTimeSlots(),
@@ -82,42 +85,48 @@ class RestaurantBookingPage extends StatelessWidget {
   Widget _buildRestaurantHeader() {
     return Container(
       padding: EdgeInsets.all(16),
-      child: Row(
+      child: Column(
         children: [
-          Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 24,
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'The Grand Kitchen-Multi Cuisine',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+          Row(
+            children: [
+              Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 24,
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      'The Grand Kitchen-Multi Cuisine',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'North-Indian Restaurant',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4),
-                Text(
-                  'North-Indian Restaurant',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              Icon(
+                Icons.home,
+                color: Colors.black,
+                size: 24,
+              ),
+            ],
           ),
-          Icon(
-            Icons.home,
-            color: Colors.black,
-            size: 24,
-          ),
+          SizedBox(height: 16),
         ],
       ),
     );
