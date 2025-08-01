@@ -31,8 +31,9 @@ class ReservationState extends Equatable {
       '09:30 PM',
     ],
     this.bookedTimeSlots = const [
-      '06:00 PM',
-      '07:30 PM',
+      '05:00 PM',
+      '07:00 PM',
+      '08:00 PM',
     ],
     this.isFormValid = false,
   });
