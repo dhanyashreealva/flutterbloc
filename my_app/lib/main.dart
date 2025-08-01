@@ -6,12 +6,12 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contet) {
     return MaterialApp(
       title: 'Restaurant App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
-      home: RestaurantBookingPage(),
+      home: CartPage(),
       routes: {
         '/booking': (context) => RestaurantBookingPage(),
         '/cartPage': (context) => CartPage(),

@@ -10,7 +10,7 @@ class CartPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => CartBloc()..add(LoadCart()),
       child: Scaffold(
-        backgroundColor: Color(0xFFF8F8F8), // Light off-white background
+        backgroundColor: Colors.white, // White background as in screenshot
         body: SafeArea(
           child: BlocListener<CartBloc, CartState>(
             listenWhen: (previous, current) {
@@ -31,7 +31,7 @@ class CartPage extends StatelessWidget {
             child: Column(
               children: [
                 // Top Header
-                _buildHeader(),
+                _buildHeader(context),
                 
                 // Restaurant Name
                 _buildRestaurantName(),
@@ -51,19 +51,24 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 24,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 24,
+            ),
           ),
           Expanded(
             child: Text(
-              'CART',
+              'ADDED ITEMS',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -72,10 +77,15 @@ class CartPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Icon(
-            Icons.home_outlined,
-            color: Colors.black,
-            size: 24,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/'); // Assuming home route
+            },
+            child: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+              size: 24,
+            ),
           ),
         ],
       ),
@@ -86,16 +96,20 @@ class CartPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Divider(color: Colors.grey.shade300, height: 1),
           SizedBox(height: 8),
           Text(
             'The Grand Kitchen-Multi Cuisine Restaurant',
             style: TextStyle(
-              color: Colors.grey.shade600,
+              color: Colors.brown.shade400,
               fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
           ),
+          SizedBox(height: 8),
+          Divider(color: Colors.grey.shade300, height: 1),
         ],
       ),
     );
@@ -166,18 +180,13 @@ class CartPage extends StatelessWidget {
           );
         }
 
-        return ListView.builder(
-          padding: EdgeInsets.all(16),
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           itemCount: state.cartItems.length,
+          separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300, height: 1),
           itemBuilder: (context, index) {
             final item = state.cartItems[index];
-            return Column(
-              children: [
-                _buildItemCard(context, item),
-                if (index < state.cartItems.length - 1)
-                  Divider(color: Colors.grey.shade300, height: 1),
-              ],
-            );
+            return _buildItemCard(context, item);
           },
         );
       },
@@ -186,7 +195,7 @@ class CartPage extends StatelessWidget {
 
   Widget _buildItemCard(BuildContext context, CartItem item) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           // Food Image
@@ -221,89 +230,71 @@ class CartPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item.name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    // Dietary Indicator
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: item.isVeg ? Colors.green : Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
+                Text(
+                  item.name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   '₹${item.price.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
             ),
           ),
           
+          // Veg/Non-Veg Indicator with symbols
+          item.isVeg
+              ? Container(
+                  width: 14,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Colors.green, width: 2),
+                  ),
+                  child: Center(
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  width: 14,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Colors.red, width: 2),
+                  ),
+                  child: CustomPaint(
+                    size: Size(14, 14),
+                    painter: _RedTrianglePainter(),
+                  ),
+                ),
+          SizedBox(width: 12),
+
           // Quantity Controls
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      if (item.quantity > 1) {
-                        context.read<CartBloc>().add(
-                          UpdateItemQuantity(item.id, item.quantity - 1),
-                        );
-                      } else {
-                        context.read<CartBloc>().add(
-                          RemoveItemFromCart(item.id),
-                        );
-                      }
-                    },
-                    icon: Icon(Icons.remove_circle_outline, size: 20),
-                    color: Colors.grey.shade600,
-                  ),
-                  Text(
-                    '${item.quantity}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.read<CartBloc>().add(
-                        UpdateItemQuantity(item.id, item.quantity + 1),
-                      );
-                    },
-                    icon: Icon(Icons.add_circle_outline, size: 20),
-                    color: Color(0xFF2E7D32),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
               Text(
-                '₹${(item.price * item.quantity).toStringAsFixed(2)}',
+                'Quantity: ${item.quantity.toString().padLeft(2, '0')}',
                 style: TextStyle(
-                  color: Colors.grey.shade600,
+                  color: Colors.black,
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
@@ -322,38 +313,29 @@ class CartPage extends StatelessWidget {
             color: Colors.grey.shade100,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Bill Details Title
-              Row(
-                children: [
-                  Text(
-                    'BILL DETAILS',
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              Text(
+                'BILL DETAILS',
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 16),
-              
-              // Bill Items
               _buildBillRow('Items Total', '₹${state.itemsTotal.toStringAsFixed(2)}'),
               SizedBox(height: 8),
               _buildBillRow('Tax', '₹${state.tax.toStringAsFixed(2)}'),
               Divider(color: Colors.grey.shade300, height: 24),
               _buildBillRow('Grand total', '₹${state.grandTotal.toStringAsFixed(2)}', isTotal: true),
-              
               SizedBox(height: 20),
-              
-              // Next Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF2E7D32), // Green color
+                    backgroundColor: Color(0xFF2E7D32),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -361,7 +343,6 @@ class CartPage extends StatelessWidget {
                     elevation: 0,
                   ),
                   onPressed: state.cartItems.isNotEmpty ? () {
-                    // Navigate to next screen
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Proceeding to checkout...'),
@@ -409,4 +390,24 @@ class CartPage extends StatelessWidget {
       ],
     );
   }
-} 
+}
+
+class _RedTrianglePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.red
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
