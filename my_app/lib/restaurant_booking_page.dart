@@ -8,13 +8,12 @@ class RestaurantBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReservationBloc()..add(LoadTimeSlots()),
+      create: (context) => ReservationBloc(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF8E6E6), // Exact color: #F8E6E6
         body: SafeArea(
           child: BlocListener<ReservationBloc, ReservationState>(
             listenWhen: (previous, current) {
-              // Only listen when status changes to success or failure
               return (previous.status != current.status) && 
                      (current.status == ReservationStatus.success || 
                       current.status == ReservationStatus.failure);
@@ -28,7 +27,6 @@ class RestaurantBookingPage extends StatelessWidget {
                     duration: Duration(seconds: 3),
                   ),
                 );
-                // Reset the status after showing the message
                 Future.delayed(Duration(seconds: 3), () {
                   context.read<ReservationBloc>().add(ResetReservation());
                 });
@@ -42,44 +40,53 @@ class RestaurantBookingPage extends StatelessWidget {
                 );
               }
             },
-            child: Column(
-              children: [
-                // Header Section
-                _buildHeader(),
-                
-                // Booking Details Section
-                _buildBookingDetails(),
-                
-                // Time Slots Section
-                Expanded(
-                  child: _buildTimeSlots(),
-                ),
-                
-                // Next Button
-                _buildNextButton(),
-              ],
-            ),
+            child: _buildMainContent(),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildMainContent() {
+    return Column(
+      children: [
+        // Orange Container with Restaurant Header and Booking Details
+        Container(
+          margin: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Color(0xFFFF8C42), // Light orange/brownish-orange
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              // Restaurant Header
+              _buildRestaurantHeader(),
+              
+              // Booking Details Section
+              _buildBookingDetails(),
+            ],
+          ),
+        ),
+        
+        // Time Slots Section (outside orange container)
+        Expanded(
+          child: _buildTimeSlots(),
+        ),
+        
+        // Next Button (outside orange container)
+        _buildNextButton(),
+      ],
+    );
+  }
+
+  Widget _buildRestaurantHeader() {
     return Container(
       padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Color(0xFFFF8C42), // Light brown/orange color
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
       child: Row(
         children: [
           Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: Colors.black,
             size: 24,
           ),
           SizedBox(width: 16),
@@ -90,7 +97,7 @@ class RestaurantBookingPage extends StatelessWidget {
                 Text(
                   'The Grand Kitchen-Multi Cuisine',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -99,7 +106,7 @@ class RestaurantBookingPage extends StatelessWidget {
                 Text(
                   'North-Indian Restaurant',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black54,
                     fontSize: 14,
                   ),
                 ),
@@ -108,7 +115,7 @@ class RestaurantBookingPage extends StatelessWidget {
           ),
           Icon(
             Icons.home,
-            color: Colors.white,
+            color: Colors.black,
             size: 24,
           ),
         ],
@@ -118,7 +125,7 @@ class RestaurantBookingPage extends StatelessWidget {
 
   Widget _buildBookingDetails() {
     return Container(
-      margin: EdgeInsets.all(16),
+      margin: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
           Expanded(
@@ -157,26 +164,27 @@ class RestaurantBookingPage extends StatelessWidget {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: Color(0xFFFF8C42),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey.shade300),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: currentValue.isNotEmpty ? currentValue : null,
               icon: Icon(
                 Icons.keyboard_arrow_down,
-                color: Colors.white,
+                color: Colors.black,
                 size: 20,
               ),
-              dropdownColor: Color(0xFFFF8C42),
+              dropdownColor: Colors.white,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.w500,
               ),
               hint: Text(
                 label,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black54,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -186,7 +194,7 @@ class RestaurantBookingPage extends StatelessWidget {
                   child: Text(
                     value,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -217,104 +225,141 @@ class RestaurantBookingPage extends StatelessWidget {
   Widget _buildTimeSlots() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Available time slots:',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              'Available time slots:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
             ),
           ),
-          SizedBox(height: 16),
           Expanded(
-            child: BlocBuilder<ReservationBloc, ReservationState>(
-              builder: (context, state) {
-                if (state.status == ReservationStatus.loading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF8C42)),
-                    ),
-                  );
-                }
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: BlocBuilder<ReservationBloc, ReservationState>(
+                builder: (context, state) {
+                  if (state.status == ReservationStatus.loading && state.availableTimeSlots.isEmpty) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF8C42)),
+                      ),
+                    );
+                  }
 
-                if (state.status == ReservationStatus.failure) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.error_outline,
-                          size: 48,
-                          color: Colors.red,
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          'Failed to load time slots',
-                          style: TextStyle(
-                            fontSize: 16,
+                  if (state.status == ReservationStatus.failure && state.availableTimeSlots.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 48,
                             color: Colors.red,
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.read<ReservationBloc>().add(LoadTimeSlots());
-                          },
-                          child: Text('Retry'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                final timeSlots = state.availableTimeSlots.isNotEmpty 
-                    ? state.availableTimeSlots 
-                    : _timeSlots;
-
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 2.5,
-                  ),
-                  itemCount: timeSlots.length,
-                  itemBuilder: (context, index) {
-                    final timeSlot = timeSlots[index];
-                    final isSelected = state.selectedSlot == timeSlot;
-                    
-                    return GestureDetector(
-                      onTap: () {
-                        context.read<ReservationBloc>().add(
-                          SelectTimeSlot(timeSlot),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: isSelected ? Colors.black : Colors.white,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            timeSlot,
+                          SizedBox(height: 16),
+                          Text(
+                            'Failed to load time slots',
                             style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<ReservationBloc>().add(LoadTimeSlots());
+                            },
+                            child: Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  final timeSlots = state.availableTimeSlots.isNotEmpty 
+                      ? state.availableTimeSlots 
+                      : _timeSlots;
+
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 2.5,
+                    ),
+                    itemCount: timeSlots.length,
+                    itemBuilder: (context, index) {
+                      final timeSlot = timeSlots[index];
+                      final isSelected = state.selectedSlot == timeSlot;
+                      final isBooked = state.isTimeSlotBooked(timeSlot);
+                      
+                      return GestureDetector(
+                        onTap: isBooked ? null : () {
+                          context.read<ReservationBloc>().add(
+                            SelectTimeSlot(timeSlot),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isBooked 
+                                ? Colors.grey.shade300 // Grey for booked slots
+                                : isSelected 
+                                    ? Colors.black 
+                                    : Colors.white,
+                            border: Border.all(
+                              color: isBooked 
+                                  ? Colors.grey.shade400 
+                                  : Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  timeSlot,
+                                  style: TextStyle(
+                                    color: isBooked 
+                                        ? Colors.grey.shade600 
+                                        : isSelected 
+                                            ? Colors.white 
+                                            : Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                if (isBooked) ...[
+                                  SizedBox(height: 2),
+                                  Text(
+                                    'BOOKED',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

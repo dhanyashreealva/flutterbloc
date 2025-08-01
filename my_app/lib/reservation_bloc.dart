@@ -35,6 +35,12 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   }
 
   void _onSelectTimeSlot(SelectTimeSlot event, Emitter<ReservationState> emit) {
+    // Check if the time slot is booked
+    if (state.isTimeSlotBooked(event.slot)) {
+      // Don't allow selection of booked slots
+      return;
+    }
+    
     emit(state.copyWith(
       selectedSlot: event.slot,
       isFormValid: _validateForm(state.selectedPeople, state.selectedDate, state.selectedTime, event.slot),

@@ -10,6 +10,7 @@ class ReservationState extends Equatable {
   final ReservationStatus status;
   final String? errorMessage;
   final List<String> availableTimeSlots;
+  final List<String> bookedTimeSlots;
   final bool isFormValid;
 
   const ReservationState({
@@ -17,9 +18,22 @@ class ReservationState extends Equatable {
     this.selectedDate = 'today',
     this.selectedTime = '06:00',
     this.selectedSlot = '',
-    this.status = ReservationStatus.initial,
+    this.status = ReservationStatus.success,
     this.errorMessage,
-    this.availableTimeSlots = const [],
+    this.availableTimeSlots = const [
+      '05:00 PM',
+      '05:30 PM',
+      '06:00 PM',
+      '06:30 PM',
+      '07:00 PM',
+      '07:30 PM',
+      '08:00 PM',
+      '09:30 PM',
+    ],
+    this.bookedTimeSlots = const [
+      '06:00 PM',
+      '07:30 PM',
+    ],
     this.isFormValid = false,
   });
 
@@ -31,6 +45,7 @@ class ReservationState extends Equatable {
     ReservationStatus? status,
     String? errorMessage,
     List<String>? availableTimeSlots,
+    List<String>? bookedTimeSlots,
     bool? isFormValid,
   }) {
     return ReservationState(
@@ -41,6 +56,7 @@ class ReservationState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage,
       availableTimeSlots: availableTimeSlots ?? this.availableTimeSlots,
+      bookedTimeSlots: bookedTimeSlots ?? this.bookedTimeSlots,
       isFormValid: isFormValid ?? this.isFormValid,
     );
   }
@@ -51,6 +67,10 @@ class ReservationState extends Equatable {
                                 selectedTime.isNotEmpty && 
                                 selectedSlot.isNotEmpty;
 
+  bool isTimeSlotBooked(String timeSlot) {
+    return bookedTimeSlots.contains(timeSlot);
+  }
+
   @override
   List<Object?> get props => [
     selectedPeople, 
@@ -60,6 +80,7 @@ class ReservationState extends Equatable {
     status, 
     errorMessage,
     availableTimeSlots,
+    bookedTimeSlots,
     isFormValid,
   ];
 }
