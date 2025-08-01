@@ -395,6 +395,10 @@ class RestaurantBookingPage extends StatelessWidget {
               ),
               onPressed: isFormValid && !isLoading ? () {
                 context.read<ReservationBloc>().add(SubmitReservation());
+                // Navigate to cart page after successful submission
+                Future.delayed(Duration(seconds: 3), () {
+                  Navigator.pushNamed(context, '/cart');
+                });
               } : null,
               child: isLoading
                   ? Row(
