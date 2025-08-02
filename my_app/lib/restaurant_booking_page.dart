@@ -28,6 +28,12 @@ class RestaurantBookingPage extends StatelessWidget {
                   ),
                 );
                 Future.delayed(Duration(seconds: 3), () {
+                  // Navigate to the confirmation page with the confirmation number
+                  Navigator.pushNamed(
+                    context, 
+                    '/confirmation',
+                    arguments: state.confirmationNumber,
+                  );
                   context.read<ReservationBloc>().add(ResetReservation());
                 });
               } else if (state.status == ReservationStatus.failure) {
@@ -395,10 +401,6 @@ class RestaurantBookingPage extends StatelessWidget {
               ),
               onPressed: isFormValid && !isLoading ? () {
                 context.read<ReservationBloc>().add(SubmitReservation());
-                // Navigate to cart page after successful submission
-                Future.delayed(Duration(seconds: 3), () {
-                  Navigator.pushNamed(context, '/cart');
-                });
               } : null,
               child: isLoading
                   ? Row(

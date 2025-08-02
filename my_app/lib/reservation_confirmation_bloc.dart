@@ -14,7 +14,14 @@ class ReservationConfirmationBloc extends Bloc<ReservationConfirmationEvent, Res
     try {
       // Simulate loading reservation confirmation data
       await Future.delayed(Duration(milliseconds: 500));
-      emit(state.copyWith(status: ReservationConfirmationStatus.success));
+      
+      // Generate a confirmation number (in a real app, this would come from the backend)
+      final confirmationNumber = 'CONF-${DateTime.now().millisecondsSinceEpoch.toString().substring(6)}';
+      
+      emit(state.copyWith(
+        status: ReservationConfirmationStatus.success,
+        confirmationNumber: confirmationNumber,
+      ));
     } catch (e) {
       emit(state.copyWith(status: ReservationConfirmationStatus.failure, errorMessage: e.toString()));
     }

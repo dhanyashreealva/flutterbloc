@@ -3,13 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'reservation_confirmation_bloc.dart';
 import 'reservation_confirmation_event.dart';
 import 'reservation_confirmation_state.dart';
+import 'cart_bloc.dart';
+import 'cart_state.dart';
 import 'CartPage.dart';
 
 class ReservationConfirmationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final String? confirmationNumber = ModalRoute.of(context)?.settings.arguments as String?;
+    
     return BlocProvider(
-      create: (context) => ReservationConfirmationBloc()..add(LoadReservationConfirmation()),
+      create: (context) => ReservationConfirmationBloc()
+        ..add(LoadReservationConfirmation()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -30,12 +35,12 @@ class ReservationConfirmationPage extends StatelessWidget {
             child: Column(
               children: [
                 _buildHeader(context),
-                _buildRestaurantName(),
+                _buildRestaurantName(context, confirmationNumber),
                 _buildSummaryDetails(context),
-                _buildContactInfo(),
+                _buildContactInfo(context),
                 _buildRulesRestrictions(),
                 _buildBillDetails(),
-                _buildProceedButton(),
+                _buildProceedButton(context),
               ],
             ),
           ),
@@ -69,17 +74,63 @@ class ReservationConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRestaurantName() {
+  Widget _buildRestaurantName(BuildContext context, String? confirmationNumber) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Text(
-        'The Grand Kitchen-Multi Cuisine Restaurant',
-        style: TextStyle(
-          color: Colors.brown.shade400,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-        ),
-        textAlign: TextAlign.center,
+      child: Column(
+        children: [
+          Text(
+            'The Grand Kitchen-Multi Cuisine Restaurant',
+            style: TextStyle(
+              color: Colors.brown.shade400,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          if (confirmationNumber != null)
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.green.shade300),
+              ),
+              child: Text(
+                'Confirmation #: $confirmationNumber',
+                style: TextStyle(
+                  color: Colors.green.shade800,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            )
+          else
+            BlocBuilder<ReservationConfirmationBloc, ReservationConfirmationState>(
+              builder: (context, state) {
+                if (state.confirmationNumber != null) {
+                  return Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.green.shade300),
+                    ),
+                    child: Text(
+                      'Confirmation #: ${state.confirmationNumber}',
+                      style: TextStyle(
+                        color: Colors.green.shade800,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                }
+                return SizedBox.shrink();
+              },
+            ),
+        ],
       ),
     );
   }
@@ -134,7 +185,7 @@ class ReservationConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContactInfo() {
+  Widget _buildContactInfo(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -144,10 +195,10 @@ class ReservationConfirmationPage extends StatelessWidget {
           SizedBox(height: 8),
           GestureDetector(
             onTap: () {
+              String contactNumber = '';
               showDialog(
                 context: context,
-                builder: (context) {
-                  String contactNumber = '';
+                builder: (BuildContext dialogContext) {
                   return AlertDialog(
                     title: Text('Add Contact Number'),
                     content: TextField(
@@ -160,14 +211,16 @@ class ReservationConfirmationPage extends StatelessWidget {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
-                          // TODO: Save contact number logic
+                          if (contactNumber.isNotEmpty) {
+                            context.read<ReservationConfirmationBloc>().add(AddContactInfo(contactNumber));
+                          }
+                          Navigator.of(dialogContext).pop();
                         },
                         child: Text('Save'),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(dialogContext).pop();
                         },
                         child: Text('Cancel'),
                       ),
@@ -184,7 +237,19 @@ class ReservationConfirmationPage extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Expanded(child: Text('Add Contact Info')),
+                  Expanded(
+                    child: BlocBuilder<ReservationConfirmationBloc, ReservationConfirmationState>(
+                      builder: (context, state) {
+                        return Text(
+                          state.contactInfo ?? 'Add Contact Info',
+                          style: TextStyle(
+                            fontWeight: state.contactInfo != null ? FontWeight.normal : FontWeight.bold,
+                            color: state.contactInfo != null ? Colors.black : Colors.grey.shade600,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade600),
                 ],
               ),
@@ -203,26 +268,36 @@ class ReservationConfirmationPage extends StatelessWidget {
         children: [
           Text('Rules & Restrictions', style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 8),
-          Row(
-            children: [
-              Icon(Icons.cancel, color: Colors.red),
-              SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Cancellation policy\nIf you can’t make it your reservation, please cancel your reservation in advance.',
-                  style: TextStyle(color: Colors.red),
-                ),
+              Row(
+                children: [
+                  Icon(Icons.cancel, color: Colors.black),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Cancellation policy\n',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          TextSpan(
+                            text: 'If you can’t make it your reservation, please cancel your reservation in advance.',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Text(
+                'NOTE: 30% advance is required to confirm your booking. The remaining amount is payable at the restaurant.',
+                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),
             ],
           ),
-          SizedBox(height: 8),
-          Text(
-            'NOTE: 30% advance is required to confirm your booking. The remaining amount is payable at the restaurant.',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
+        );
   }
 
   Widget _buildBillDetails() {
@@ -261,7 +336,7 @@ class ReservationConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProceedButton() {
+  Widget _buildProceedButton(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16),
       child: SizedBox(
@@ -273,9 +348,9 @@ class ReservationConfirmationPage extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           onPressed: () {
-            // TODO: Implement payment action
+            Navigator.pushNamed(context, '/payment');
           },
-          child: Text('PROCEED TO PAY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          child: Text('PROCEED TO PAY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
         ),
       ),
     );

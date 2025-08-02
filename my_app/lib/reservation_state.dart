@@ -12,6 +12,7 @@ class ReservationState extends Equatable {
   final List<String> availableTimeSlots;
   final List<String> bookedTimeSlots;
   final bool isFormValid;
+  final String? confirmationNumber;
 
   const ReservationState({
     this.selectedPeople = '2',
@@ -36,6 +37,7 @@ class ReservationState extends Equatable {
       '08:00 PM',
     ],
     this.isFormValid = false,
+    this.confirmationNumber,
   });
 
   ReservationState copyWith({
@@ -48,6 +50,7 @@ class ReservationState extends Equatable {
     List<String>? availableTimeSlots,
     List<String>? bookedTimeSlots,
     bool? isFormValid,
+    String? confirmationNumber,
   }) {
     return ReservationState(
       selectedPeople: selectedPeople ?? this.selectedPeople,
@@ -59,6 +62,7 @@ class ReservationState extends Equatable {
       availableTimeSlots: availableTimeSlots ?? this.availableTimeSlots,
       bookedTimeSlots: bookedTimeSlots ?? this.bookedTimeSlots,
       isFormValid: isFormValid ?? this.isFormValid,
+      confirmationNumber: confirmationNumber ?? this.confirmationNumber,
     );
   }
 
@@ -83,5 +87,6 @@ class ReservationState extends Equatable {
     availableTimeSlots,
     bookedTimeSlots,
     isFormValid,
+    confirmationNumber,
   ];
 }

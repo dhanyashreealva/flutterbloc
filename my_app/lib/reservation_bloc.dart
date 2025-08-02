@@ -70,9 +70,13 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
       
+      // Generate a confirmation number (in a real app, this would come from the backend)
+      final confirmationNumber = 'CONF-${DateTime.now().millisecondsSinceEpoch.toString().substring(6)}';
+      
       emit(state.copyWith(
         status: ReservationStatus.success,
         errorMessage: null,
+        confirmationNumber: confirmationNumber,
       ));
     } catch (e) {
       emit(state.copyWith(
