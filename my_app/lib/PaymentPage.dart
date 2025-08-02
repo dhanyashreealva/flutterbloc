@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ne remove itimport 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/payment_bloc.dart';
 import 'package:my_app/payment_event.dart';
@@ -87,24 +87,32 @@ class _PaymentPageState extends State<PaymentPage> {
         return Container(
           decoration: BoxDecoration(
             color: isSelected ? Colors.white : Colors.transparent,
+            border: Border(
+              bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+            ),
           ),
           child: Column(
             children: [
               ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 0),
                 leading: Radio<String>(
                   value: provider['name']!,
                   groupValue: selectedProvider,
                   onChanged: (value) {
                     context.read<PaymentBloc>().add(SelectUPIProvider(value!));
                   },
-                  activeColor: Colors.green,
+                  activeColor: Colors.black,
+                  fillColor: MaterialStateProperty.all(Colors.black),
                 ),
-                title: Text(
-                  provider['name']!,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                    color: isSelected ? Colors.black : Colors.black87,
+                title: Container(
+                  width: double.infinity,
+                  child: Text(
+                    provider['name']!,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected ? Colors.black : Colors.black87,
+                    ),
                   ),
                 ),
                 trailing: Image.asset(
@@ -132,20 +140,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ProcessPayment(provider['name']!, advanceAmount),
                                 );
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Pay ₹${advanceAmount.toStringAsFixed(2)}',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                              ),
-                              SizedBox(width: 8),
-                              Image.asset(
-                                'assets/images/upi_logo.png',
-                                height: 20,
-                                width: 20,
-                              ),
-                            ],
+                          child: Text(
+                            'Pay ₹${advanceAmount.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                       ),
@@ -215,7 +212,9 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment'),
+        title: Center(
+          child: Text('Payment'),
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 1,
@@ -246,14 +245,16 @@ class _PaymentPageState extends State<PaymentPage> {
                 children: [
                   Image.asset('assets/images/upi_logo.png', height: 20, width: 20),
                   SizedBox(width: 8),
-                  Text(
-                    'UPI',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Expanded(
+                    child: Text(
+                      'UPI',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                 ],
               ),
               onExpansionChanged: (expanded) => _onExpansionChanged('UPI', expanded),
-              children: [
+              children: <Widget>[
                 BlocBuilder<PaymentBloc, PaymentState>(
                   builder: (context, state) {
                     String? selectedProvider;
@@ -267,18 +268,26 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
             ExpansionTile(
               initiallyExpanded: _expandedCategory == 'Credit/Debit/ATM Card',
-              title: Row(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.credit_card, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Credit/Debit/ATM Card',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Row(
+                    children: [
+                      Icon(Icons.credit_card, size: 20),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Credit/Debit/ATM Card',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ),
+                    ],
                   ),
+              // Divider removed as per user request
                 ],
               ),
               onExpansionChanged: (expanded) => _onExpansionChanged('Credit/Debit/ATM Card', expanded),
-              children: [
+              children: <Widget>[
                 BlocBuilder<PaymentBloc, PaymentState>(
                   builder: (context, state) {
                     String? selectedCard;
@@ -296,14 +305,16 @@ class _PaymentPageState extends State<PaymentPage> {
                 children: [
                   Icon(Icons.account_balance, size: 20),
                   SizedBox(width: 8),
-                  Text(
-                    'Net Banking',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Expanded(
+                    child: Text(
+                      'Net Banking',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                 ],
               ),
               onExpansionChanged: (expanded) => _onExpansionChanged('Net Banking', expanded),
-              children: [
+              children: <Widget>[
                 BlocBuilder<PaymentBloc, PaymentState>(
                   builder: (context, state) {
                     String? selectedNetBanking;
