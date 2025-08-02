@@ -20,6 +20,24 @@ class PaymentUPISelected extends PaymentState {
   List<Object> get props => [selectedProvider];
 }
 
+class PaymentCardSelected extends PaymentState {
+  final String selectedCardOption;
+
+  const PaymentCardSelected(this.selectedCardOption);
+
+  @override
+  List<Object> get props => [selectedCardOption];
+}
+
+class PaymentNetBankingSelected extends PaymentState {
+  final String selectedNetBankingOption;
+
+  const PaymentNetBankingSelected(this.selectedNetBankingOption);
+
+  @override
+  List<Object> get props => [selectedNetBankingOption];
+}
+
 class PaymentProcessing extends PaymentState {
   final String provider;
   final double amount;

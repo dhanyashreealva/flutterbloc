@@ -5,6 +5,8 @@ import 'payment_state.dart';
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   PaymentBloc() : super(const PaymentInitial()) {
     on<SelectUPIProvider>(_onSelectUPIProvider);
+    on<SelectCardOption>(_onSelectCardOption);
+    on<SelectNetBankingOption>(_onSelectNetBankingOption);
     on<ProcessPayment>(_onProcessPayment);
     on<ResetPayment>(_onResetPayment);
   }
@@ -14,6 +16,20 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     Emitter<PaymentState> emit,
   ) {
     emit(PaymentUPISelected(event.provider));
+  }
+
+  void _onSelectCardOption(
+    SelectCardOption event,
+    Emitter<PaymentState> emit,
+  ) {
+    emit(PaymentCardSelected(event.cardOption));
+  }
+
+  void _onSelectNetBankingOption(
+    SelectNetBankingOption event,
+    Emitter<PaymentState> emit,
+  ) {
+    emit(PaymentNetBankingSelected(event.netBankingOption));
   }
 
   void _onProcessPayment(
