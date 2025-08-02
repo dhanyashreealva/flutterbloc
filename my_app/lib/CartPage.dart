@@ -96,7 +96,7 @@ class CartPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Divider(color: Colors.grey.shade300, height: 1),
           SizedBox(height: 8),
@@ -104,9 +104,10 @@ class CartPage extends StatelessWidget {
             'The Grand Kitchen-Multi Cuisine Restaurant',
             style: TextStyle(
               color: Colors.brown.shade400,
-              fontSize: 14,
+              fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 8),
           Divider(color: Colors.grey.shade300, height: 1),
@@ -205,23 +206,12 @@ class CartPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(8),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                item.imagePath,
+              image: DecorationImage(
+                image: AssetImage(item.imagePath),
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey.shade300,
-                    child: Icon(
-                      Icons.restaurant,
-                      color: Colors.grey.shade600,
-                    ),
-                  );
-                },
               ),
             ),
+            // Remove ClipRRect and Image.asset since decoration image handles it
           ),
           SizedBox(width: 12),
           
@@ -254,16 +244,16 @@ class CartPage extends StatelessWidget {
           // Veg/Non-Veg Indicator with symbols
           item.isVeg
               ? Container(
-                  width: 14,
-                  height: 14,
+                  width: 16,
+                  height: 16,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     border: Border.all(color: Colors.green, width: 2),
                   ),
                   child: Center(
                     child: Container(
-                      width: 8,
-                      height: 8,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
                         color: Colors.green,
                         shape: BoxShape.circle,
@@ -272,15 +262,17 @@ class CartPage extends StatelessWidget {
                   ),
                 )
               : Container(
-                  width: 14,
-                  height: 14,
+                  width: 16,
+                  height: 16,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: CustomPaint(
-                    size: Size(14, 14),
-                    painter: _RedTrianglePainter(),
+                  child: Center(
+                    child: CustomPaint(
+                      size: Size(10, 10),
+                      painter: _RedTrianglePainter(),
+                    ),
                   ),
                 ),
           SizedBox(width: 12),

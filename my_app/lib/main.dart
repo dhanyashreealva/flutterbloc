@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'restaurant_booking_page.dart';
 import 'CartPage.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext contet) {
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Restaurant App',
+      title: 'Cart Page Test',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       home: CartPage(),
-      routes: {
-        '/booking': (context) => RestaurantBookingPage(),
-        '/cartPage': (context) => CartPage(),
-      },
     );
   }
 }

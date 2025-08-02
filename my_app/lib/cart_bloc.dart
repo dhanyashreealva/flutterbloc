@@ -26,7 +26,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           name: 'Chicken Manchow Soup',
           price: 502.50,
           quantity: 2,
-          imagePath: 'assets/images/soup.jpg',
+          imagePath: 'assets/images/chickenmanchow_soup.jpeg',
           isVeg: false,
         ),
         CartItem(
@@ -34,7 +34,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           name: 'Veg biriyani',
           price: 160.75,
           quantity: 1,
-          imagePath: 'assets/images/biryani.jpg',
+          imagePath: 'assets/images/veg_biriyani.jpeg',
           isVeg: true,
         ),
         CartItem(
@@ -42,7 +42,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           name: 'Paneer manchurian',
           price: 280.25,
           quantity: 1,
-          imagePath: 'assets/images/paneer.jpg',
+          imagePath: 'assets/images/paneer_manchurian.jpeg',
           isVeg: true,
         ),
         CartItem(
@@ -50,7 +50,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           name: 'Ghee rice',
           price: 180.00,
           quantity: 2,
-          imagePath: 'assets/images/rice.jpg',
+          imagePath: 'assets/images/ghee_rice.jpeg',
           isVeg: true,
         ),
         CartItem(
@@ -58,7 +58,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           name: 'Chicken Kadai',
           price: 640.20,
           quantity: 2,
-          imagePath: 'assets/images/chicken.jpg',
+          imagePath: 'assets/images/kadai_chicken.jpeg',
           isVeg: false,
         ),
       ];
