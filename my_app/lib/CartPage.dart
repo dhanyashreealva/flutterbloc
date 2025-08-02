@@ -101,7 +101,7 @@ class CartPage extends StatelessWidget {
           Divider(color: Colors.grey.shade300, height: 1),
           SizedBox(height: 8),
           Text(
-            'The Grand Kitchen-Multi Cuisine Restaurant',
+            'The Grand Kitchen-Multi Cuisine Restaurant', 
             style: TextStyle(
               color: Colors.brown.shade400,
               fontSize: 20,
