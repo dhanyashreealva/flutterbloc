@@ -238,7 +238,7 @@ class OrderSummaryPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/cart');
+                  Navigator.pushNamed(context, '/cartItems');
                 },
                 child: Text(
                   'View items',

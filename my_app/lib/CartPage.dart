@@ -229,15 +229,14 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 4),
-                // Removed price display as per user request
-                // Text(
-                //   '₹${item.price.toStringAsFixed(2)}',
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 12,
-                //     fontWeight: FontWeight.w400,
-                //   ),
-                // ),
+                Text(
+                  '₹${item.price.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),

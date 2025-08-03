@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/CartItemsPage.dart';
 import 'ReservationConfirmationPage.dart';
 import 'PaymentPage.dart';
 import 'OrderSummaryPage.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           '/payment': (context) => PaymentPage(),
           '/orderSummary': (context) => OrderSummaryPage(),
           '/cart': (context) => CartPage(),
+          '/cartItems': (context) => CartItemsPage(),
         },
       ),
     );
