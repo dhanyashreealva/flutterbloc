@@ -34,6 +34,20 @@ class SelectTimeSlot extends ReservationEvent {
   List<Object> get props => [slot];
 }
 
+class SelectTable extends ReservationEvent {
+  final String table;
+  const SelectTable(this.table);
+  @override
+  List<Object> get props => [table];
+}
+
+class DeselectTable extends ReservationEvent {
+  final String table;
+  const DeselectTable(this.table);
+  @override
+  List<Object> get props => [table];
+}
+
 class ResetReservation extends ReservationEvent {
   const ResetReservation();
 }

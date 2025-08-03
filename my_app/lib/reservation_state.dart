@@ -7,6 +7,7 @@ class ReservationState extends Equatable {
   final String selectedDate;
   final String selectedTime;
   final String selectedSlot;
+  final List<String> selectedTables;
   final ReservationStatus status;
   final String? errorMessage;
   final List<String> availableTimeSlots;
@@ -19,6 +20,7 @@ class ReservationState extends Equatable {
     this.selectedDate = 'today',
     this.selectedTime = '06:00',
     this.selectedSlot = '',
+    this.selectedTables = const [],
     this.status = ReservationStatus.success,
     this.errorMessage,
     this.availableTimeSlots = const [
@@ -45,6 +47,7 @@ class ReservationState extends Equatable {
     String? selectedDate,
     String? selectedTime,
     String? selectedSlot,
+    List<String>? selectedTables,
     ReservationStatus? status,
     String? errorMessage,
     List<String>? availableTimeSlots,
@@ -57,6 +60,7 @@ class ReservationState extends Equatable {
       selectedDate: selectedDate ?? this.selectedDate,
       selectedTime: selectedTime ?? this.selectedTime,
       selectedSlot: selectedSlot ?? this.selectedSlot,
+      selectedTables: selectedTables ?? this.selectedTables,
       status: status ?? this.status,
       errorMessage: errorMessage,
       availableTimeSlots: availableTimeSlots ?? this.availableTimeSlots,
@@ -70,7 +74,8 @@ class ReservationState extends Equatable {
   bool get isAllFieldsSelected => selectedPeople.isNotEmpty && 
                                 selectedDate.isNotEmpty && 
                                 selectedTime.isNotEmpty && 
-                                selectedSlot.isNotEmpty;
+                                selectedSlot.isNotEmpty &&
+                                selectedTables.isNotEmpty;
 
   bool isTimeSlotBooked(String timeSlot) {
     return bookedTimeSlots.contains(timeSlot);
@@ -82,6 +87,7 @@ class ReservationState extends Equatable {
     selectedDate, 
     selectedTime, 
     selectedSlot, 
+    selectedTables,
     status, 
     errorMessage,
     availableTimeSlots,
