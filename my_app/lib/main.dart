@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'ReservationConfirmationPage.dart';
 import 'PaymentPage.dart';
+import 'OrderSummaryPage.dart';
+import 'CartPage.dart';
 import 'cart_bloc.dart';
 import 'cart_event.dart';
 import 'reservation_confirmation_bloc.dart';
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
           '/confirmation': (context) => ReservationConfirmationPage(),
           '/booking': (context) => RestaurantBookingPage(),
           '/payment': (context) => PaymentPage(),
+          '/orderSummary': (context) => OrderSummaryPage(),
+          '/cart': (context) => CartPage(),
         },
       ),
     );

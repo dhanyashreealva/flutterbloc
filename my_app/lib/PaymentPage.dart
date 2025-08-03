@@ -1,4 +1,4 @@
-ne remove itimport 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/payment_bloc.dart';
 import 'package:my_app/payment_event.dart';
@@ -210,123 +210,145 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text('Payment'),
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.home),
+    return BlocListener<PaymentBloc, PaymentState>(
+      listener: (context, state) async {
+        if (state is PaymentSuccess) {
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Payment Successful'),
+              content: Text('Your payment of ₹${state.amount.toStringAsFixed(2)} via ${state.provider} was successful.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacementNamed(context, '/orderSummary');
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ),
+          );
+          context.read<PaymentBloc>().add(ResetPayment());
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Center(
+            child: Text('Payment'),
+          ),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 1,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.of(context).pop();
             },
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildAmountToPay(),
-            ExpansionTile(
-              initiallyExpanded: _expandedCategory == 'UPI',
-              title: Row(
-                children: [
-                  Image.asset('assets/images/upi_logo.png', height: 20, width: 20),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'UPI',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
-              onExpansionChanged: (expanded) => _onExpansionChanged('UPI', expanded),
-              children: <Widget>[
-                BlocBuilder<PaymentBloc, PaymentState>(
-                  builder: (context, state) {
-                    String? selectedProvider;
-                    if (state is PaymentUPISelected) {
-                      selectedProvider = state.selectedProvider;
-                    }
-                    return _buildUPIOptions(selectedProvider);
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              initiallyExpanded: _expandedCategory == 'Credit/Debit/ATM Card',
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.credit_card, size: 20),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Credit/Debit/ATM Card',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-              // Divider removed as per user request
-                ],
-              ),
-              onExpansionChanged: (expanded) => _onExpansionChanged('Credit/Debit/ATM Card', expanded),
-              children: <Widget>[
-                BlocBuilder<PaymentBloc, PaymentState>(
-                  builder: (context, state) {
-                    String? selectedCard;
-                    if (state is PaymentCardSelected) {
-                      selectedCard = state.selectedCardOption;
-                    }
-                    return _buildCardOptions(selectedCard);
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              initiallyExpanded: _expandedCategory == 'Net Banking',
-              title: Row(
-                children: [
-                  Icon(Icons.account_balance, size: 20),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Net Banking',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
-              onExpansionChanged: (expanded) => _onExpansionChanged('Net Banking', expanded),
-              children: <Widget>[
-                BlocBuilder<PaymentBloc, PaymentState>(
-                  builder: (context, state) {
-                    String? selectedNetBanking;
-                    if (state is PaymentNetBankingSelected) {
-                      selectedNetBanking = state.selectedNetBankingOption;
-                    }
-                    return _buildNetBankingOptions(selectedNetBanking);
-                  },
-                ),
-              ],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
             ),
           ],
+        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAmountToPay(),
+              ExpansionTile(
+                initiallyExpanded: _expandedCategory == 'UPI',
+                title: Row(
+                  children: [
+                    Image.asset('assets/images/upi_logo.png', height: 20, width: 20),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'UPI',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+                onExpansionChanged: (expanded) => _onExpansionChanged('UPI', expanded),
+                children: <Widget>[
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    builder: (context, state) {
+                      String? selectedProvider;
+                      if (state is PaymentUPISelected) {
+                        selectedProvider = state.selectedProvider;
+                      }
+                      return _buildUPIOptions(selectedProvider);
+                    },
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                initiallyExpanded: _expandedCategory == 'Credit/Debit/ATM Card',
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.credit_card, size: 20),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Credit/Debit/ATM Card',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                onExpansionChanged: (expanded) => _onExpansionChanged('Credit/Debit/ATM Card', expanded),
+                children: <Widget>[
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    builder: (context, state) {
+                      String? selectedCard;
+                      if (state is PaymentCardSelected) {
+                        selectedCard = state.selectedCardOption;
+                      }
+                      return _buildCardOptions(selectedCard);
+                    },
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                initiallyExpanded: _expandedCategory == 'Net Banking',
+                title: Row(
+                  children: [
+                    Icon(Icons.account_balance, size: 20),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Net Banking',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+                onExpansionChanged: (expanded) => _onExpansionChanged('Net Banking', expanded),
+                children: <Widget>[
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    builder: (context, state) {
+                      String? selectedNetBanking;
+                      if (state is PaymentNetBankingSelected) {
+                        selectedNetBanking = state.selectedNetBankingOption;
+                      }
+                      return _buildNetBankingOptions(selectedNetBanking);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
