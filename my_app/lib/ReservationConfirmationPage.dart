@@ -32,16 +32,18 @@ class ReservationConfirmationPage extends StatelessWidget {
                 );
               }
             },
-            child: Column(
-              children: [
-                _buildHeader(context),
-                _buildRestaurantName(context, confirmationNumber),
-                _buildSummaryDetails(context),
-                _buildContactInfo(context),
-                _buildRulesRestrictions(),
-                _buildBillDetails(),
-                _buildProceedButton(context),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(context),
+                  _buildRestaurantName(context, confirmationNumber),
+                  _buildSummaryDetails(context),
+                  _buildContactInfo(context),
+                  _buildRulesRestrictions(),
+                  _buildBillDetails(),
+                  _buildProceedButton(context),
+                ],
+              ),
             ),
           ),
         ),
