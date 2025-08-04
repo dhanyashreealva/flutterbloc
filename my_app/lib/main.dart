@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         title: 'Reservation Confirmation',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.green),
-        home: TableSelectionPage(),
+        home: ReservationConfirmationPage(),
         routes: {
           '/confirmation': (context) => ReservationConfirmationPage(),
           '/booking': (context) => RestaurantBookingPage(),
