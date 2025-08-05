@@ -4,26 +4,22 @@ import 'table_selection_state.dart';
 
 class TableSelectionBloc extends Bloc<TableSelectionEvent, TableSelectionState> {
   TableSelectionBloc() : super(const TableSelectionState()) {
-    on<LoadTables>(_onLoadTables);
-    on<SelectTable>(_onSelectTable);
-  }
+    on<SelectTable>((event, emit) {
+      final updatedSelection = List<String>.from(state.selectedTables);
+      if (!updatedSelection.contains(event.tableId)) {
+        updatedSelection.add(event.tableId);
+      }
+      emit(state.copyWith(selectedTables: updatedSelection));
+    });
 
-  void _onLoadTables(LoadTables event, Emitter<TableSelectionState> emit) async {
-    emit(state.copyWith(status: TableStatus.loading));
-    await Future.delayed(Duration(milliseconds: 500)); // simulate loading
-    emit(state.copyWith(
-      status: TableStatus.success,
-      availableTables: _mockTableIds,
-      bookedTables: ['R111', 'R112'], // some booked for UI
-    ));
-  }
+    on<DeselectTable>((event, emit) {
+      final updatedSelection = List<String>.from(state.selectedTables);
+      updatedSelection.remove(event.tableId);
+      emit(state.copyWith(selectedTables: updatedSelection));
+    });
 
-  void _onSelectTable(SelectTable event, Emitter<TableSelectionState> emit) {
-    emit(state.copyWith(selectedTable: event.tableId));
+    on<ClearSelection>((event, emit) {
+      emit(const TableSelectionState(selectedTables: []));
+    });
   }
-
-  final List<String> _mockTableIds = [
-    'R111', 'R112', 'R113', 'R413', 'R414', 'R415',
-    'R416', 'R417', 'R418', 'R419'
-  ];
 }

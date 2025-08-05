@@ -76,7 +76,6 @@ flutter:
     - assets/images/tables/rectangle8.png
     - assets/images/tables/square2.png
     - assets/images/tables/square4.png
-    - assets/images/tables/square6.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
