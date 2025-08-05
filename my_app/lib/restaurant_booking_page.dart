@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'reservation_bloc.dart';
 import 'reservation_event.dart';
 import 'reservation_state.dart';
+import 'TableSelectionPage.dart';
 
 class RestaurantBookingPage extends StatelessWidget {
   @override
@@ -400,7 +401,12 @@ class RestaurantBookingPage extends StatelessWidget {
                 elevation: 0,
               ),
               onPressed: isFormValid && !isLoading ? () {
-                context.read<ReservationBloc>().add(SubmitReservation());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TableSelectionPage(),
+                  ),
+                );
               } : null,
               child: isLoading
                   ? Row(
