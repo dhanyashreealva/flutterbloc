@@ -7,18 +7,13 @@ abstract class TableSelectionEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LoadTables extends TableSelectionEvent {}
+
 class SelectTable extends TableSelectionEvent {
-  final String table;
-  const SelectTable(this.table);
+  final String tableId;
+
+  const SelectTable(this.tableId);
 
   @override
-  List<Object> get props => [table];
-}
-
-class DeselectTable extends TableSelectionEvent {
-  final String table;
-  const DeselectTable(this.table);
-
-  @override
-  List<Object> get props => [table];
+  List<Object> get props => [tableId];
 }
