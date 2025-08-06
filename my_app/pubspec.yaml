@@ -67,6 +67,8 @@ flutter:
     - assets/images/veg_biriyani.jpeg
     - assets/images/paneer_manchurian.jpeg
     - assets/images/ghee_rice.jpeg
+    - assets/images/momos.jpg
+    - assets/images/chicken_mandi.jpeg
     - assets/images/kadai_chicken.jpeg
     - assets/images/tables/circle2.png
     - assets/images/tables/circle4.png
