@@ -10,13 +10,11 @@ class CartPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => CartBloc()..add(LoadCart()),
       child: Scaffold(
-        backgroundColor: Colors.white, // White background as in screenshot
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: BlocListener<CartBloc, CartState>(
-            listenWhen: (previous, current) {
-              return (previous.status != current.status) && 
-                     (current.status == CartStatus.failure);
-            },
+            listenWhen: (previous, current) =>
+                (previous.status != current.status) && (current.status == CartStatus.failure),
             listener: (context, state) {
               if (state.status == CartStatus.failure) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -30,18 +28,9 @@ class CartPage extends StatelessWidget {
             },
             child: Column(
               children: [
-                // Top Header
                 _buildHeader(context),
-                
-                // Restaurant Name
                 _buildRestaurantName(),
-                
-                // Cart Items List
-                Expanded(
-                  child: _buildItemsList(),
-                ),
-                
-                // Bill Details and Next Button
+                Expanded(child: _buildItemsList()),
                 _buildBillDetails(),
               ],
             ),
@@ -57,60 +46,52 @@ class CartPage extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: 24,
-            ),
+            onTap: () => Navigator.of(context).pop(),
+            child: Icon(Icons.arrow_back, color: Colors.black, size: 24),
           ),
           Expanded(
             child: Text(
               'ADDED ITEMS',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 18,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/'); // Assuming home route
-            },
-            child: Icon(
-              Icons.home_outlined,
-              color: Colors.black,
-              size: 24,
-            ),
+            onTap: () => Navigator.of(context).pushNamed('/'),
+            child: Icon(Icons.home_outlined, color: Colors.black, size: 24),
           ),
         ],
       ),
     );
   }
 
+  /// 🔧 EDITED SECTION: Centered line under restaurant name
   Widget _buildRestaurantName() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Divider(color: Colors.grey.shade300, height: 1),
-          SizedBox(height: 8),
           Text(
-            'The Grand Kitchen-Multi Cuisine Restaurant', 
+            'The Grand Kitchen–Multi Cuisine Restaurant',
             style: TextStyle(
               color: Colors.brown.shade400,
-              fontSize: 20,
+              fontSize: 15,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8),
-          Divider(color: Colors.grey.shade300, height: 1),
+          SizedBox(height: 6),
+          Center(
+            child: Container(
+              width: 280,
+              height: 1,
+              color: Colors.grey.shade400,
+            ),
+          ),
         ],
       ),
     );
@@ -132,24 +113,13 @@ class CartPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 48,
-                  color: Colors.red,
-                ),
+                Icon(Icons.error_outline, size: 48, color: Colors.red),
                 SizedBox(height: 16),
-                Text(
-                  'Failed to load cart items',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.red,
-                  ),
-                ),
+                Text('Failed to load cart items',
+                    style: TextStyle(fontSize: 16, color: Colors.red)),
                 SizedBox(height: 8),
                 ElevatedButton(
-                  onPressed: () {
-                    context.read<CartBloc>().add(LoadCart());
-                  },
+                  onPressed: () => context.read<CartBloc>().add(LoadCart()),
                   child: Text('Retry'),
                 ),
               ],
@@ -162,11 +132,7 @@ class CartPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 64,
-                  color: Colors.grey.shade400,
-                ),
+                Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.grey.shade400),
                 SizedBox(height: 16),
                 Text(
                   'Your cart is empty',
@@ -199,7 +165,6 @@ class CartPage extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          // Food Image
           Container(
             width: 60,
             height: 60,
@@ -211,37 +176,28 @@ class CartPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            // Remove ClipRRect and Image.asset since decoration image handles it
           ),
           SizedBox(width: 12),
-          
-          // Item Details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  item.name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                Text(item.name,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    )),
                 SizedBox(height: 4),
-                Text(
-                  '₹${item.price.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                Text('₹${item.price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    )),
               ],
             ),
           ),
-          
-          // Veg/Non-Veg Indicator with symbols
           item.isVeg
               ? Container(
                   width: 16,
@@ -254,10 +210,7 @@ class CartPage extends StatelessWidget {
                     child: Container(
                       width: 10,
                       height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
                     ),
                   ),
                 )
@@ -276,19 +229,15 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
           SizedBox(width: 12),
-
-          // Quantity Controls
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                'Quantity: ${item.quantity.toString().padLeft(2, '0')}',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              Text('Quantity: ${item.quantity.toString().padLeft(2, '0')}',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  )),
             ],
           ),
         ],
@@ -301,26 +250,23 @@ class CartPage extends StatelessWidget {
       builder: (context, state) {
         return Container(
           padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-          ),
+          color: Colors.grey.shade100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'BILL DETAILS',
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text('BILL DETAILS',
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  )),
               SizedBox(height: 16),
               _buildBillRow('Items Total', '₹${state.itemsTotal.toStringAsFixed(2)}'),
               SizedBox(height: 8),
               _buildBillRow('Tax', '₹${state.tax.toStringAsFixed(2)}'),
               Divider(color: Colors.grey.shade300, height: 24),
-              _buildBillRow('Grand total', '₹${state.grandTotal.toStringAsFixed(2)}', isTotal: true),
+              _buildBillRow('Grand total', '₹${state.grandTotal.toStringAsFixed(2)}',
+                  isTotal: true),
               SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -334,15 +280,17 @@ class CartPage extends StatelessWidget {
                     ),
                     elevation: 0,
                   ),
-                  onPressed: state.cartItems.isNotEmpty ? () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Proceeding to checkout...'),
-                        backgroundColor: Colors.green,
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  } : null,
+                  onPressed: state.cartItems.isNotEmpty
+                      ? () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Proceeding to checkout...'),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                      : null,
                   child: Text(
                     'NEXT',
                     style: TextStyle(

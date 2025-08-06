@@ -33,38 +33,57 @@ class CartItemsPage extends StatelessWidget {
             ),
           ],
         ),
+
+       
         body: SafeArea(
-          child: BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              if (state?.status == CartStatus.loading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF2E7D32)),
-                  ),
-                );
-              }
-              if (state?.status == CartStatus.failure) {
-                return Center(
-                  child: Text(state?.errorMessage ?? 'Failed to load cart items'),
-                );
-              }
-              if (state?.cartItems == null || state!.cartItems.isEmpty) {
-                return Center(
-                  child: Text('No items in cart'),
-                );
-              }
-              return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                itemCount: state.cartItems.length,
-                separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300, height: 1),
-                itemBuilder: (context, index) {
-                  final item = state.cartItems[index];
-                  return _buildItemCard(item);
-                },
-              );
-            },
+          child: Column(
+            children: [
+              Center(
+          child: Container(
+              width: 350, 
+            child: Divider(
+             color: Colors.black,
+             thickness: 1,
+             height: 5,
+              ),
+              ),
+              ),
+              Expanded(
+                child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state?.status == CartStatus.loading) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF2E7D32)),
+                        ),
+                      );
+                    }
+                    if (state?.status == CartStatus.failure) {
+                      return Center(
+                        child: Text(state?.errorMessage ?? 'Failed to load cart items'),
+                      );
+                    }
+                    if (state?.cartItems == null || state!.cartItems.isEmpty) {
+                      return Center(
+                        child: Text('No items in cart'),
+                      );
+                    }
+                    return ListView.separated(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      itemCount: state.cartItems.length,
+                      separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300, height: 1),
+                      itemBuilder: (context, index) {
+                        final item = state.cartItems[index];
+                        return _buildItemCard(item);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ),
+        // ✅ CHANGED ENDS HERE
       ),
     );
   }

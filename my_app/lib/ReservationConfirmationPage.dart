@@ -26,7 +26,7 @@ class ReservationConfirmationPage extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.errorMessage ?? 'An error occurred'),
-                    backgroundColor: Colors.red,
+                    backgroundColor: Color(0xFFB97A3B),
                     duration: Duration(seconds: 3),
                   ),
                 );
@@ -85,7 +85,7 @@ class ReservationConfirmationPage extends StatelessWidget {
             'The Grand Kitchen-Multi Cuisine Restaurant',
             style: TextStyle(
               color: Colors.brown.shade400,
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
@@ -160,7 +160,7 @@ class ReservationConfirmationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Items list', style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text('View items', style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline)),
+                    Text('View items', style: TextStyle(color: const Color.fromARGB(255, 9, 12, 15), decoration: TextDecoration.underline)),
                   ],
                 ),
               ],
@@ -346,7 +346,7 @@ class ReservationConfirmationPage extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green.shade800,
+            backgroundColor: const Color.fromARGB(255, 41, 100, 63),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           onPressed: () {

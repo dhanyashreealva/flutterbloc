@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'reservation_bloc.dart';
 import 'reservation_event.dart';
 import 'reservation_state.dart';
-import 'TableSelectionPage.dart';
+//import 'TableSelectionPage.dart';
+import 'CartPage.dart';
+
 
 class RestaurantBookingPage extends StatelessWidget {
   @override
@@ -11,7 +13,7 @@ class RestaurantBookingPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ReservationBloc(),
       child: Scaffold(
-        backgroundColor: Color(0xFFF8E6E6), // Exact color: #F8E6E6
+        backgroundColor: Color(0xFFB97A3B), // Exact color: #F8E6E6
         body: SafeArea(
           child: BlocListener<ReservationBloc, ReservationState>(
             listenWhen: (previous, current) {
@@ -404,7 +406,7 @@ class RestaurantBookingPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TableSelectionPage(),
+                   builder: (context) => CartPage(),
                   ),
                 );
               } : null,

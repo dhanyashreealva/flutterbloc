@@ -43,9 +43,10 @@ class OrderSummaryPage extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.orange.shade700,
+        color:Color.fromRGBO(226, 161, 70, 1),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40)
         ),
       ),
       padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
@@ -244,7 +245,7 @@ class OrderSummaryPage extends StatelessWidget {
                   'View items',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.blue,
+                    color: const Color.fromARGB(255, 14, 15, 15),
                     decoration: TextDecoration.underline,
                   ),
                 ),

@@ -12,10 +12,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  String? _selectedPaymentCategory = 'UPI';
   String? _expandedCategory = 'UPI';
-
-  final List<String> paymentCategories = ['UPI', 'Credit/Debit/ATM Card', 'Net Banking'];
 
   final List<Map<String, String>> upiProviders = [
     {'name': 'PhonePe', 'icon': 'assets/images/phonepe_logo.png'},
@@ -23,24 +20,12 @@ class _PaymentPageState extends State<PaymentPage> {
     {'name': 'Paytm', 'icon': 'assets/images/paytm_logo.png'},
   ];
 
-  final List<Map<String, String>> cardOptions = [
-    {'name': 'Visa'},
-    {'name': 'MasterCard'},
-    {'name': 'American Express'},
-  ];
-
-  final List<Map<String, String>> netBankingOptions = [
-    {'name': 'HDFC Bank'},
-    {'name': 'ICICI Bank'},
-    {'name': 'State Bank of India'},
-  ];
-
   void _onExpansionChanged(String category, bool expanded) {
     setState(() {
       _expandedCategory = expanded ? category : null;
-      _selectedPaymentCategory = expanded ? category : _selectedPaymentCategory;
     });
   }
+  
 
   Widget _buildAmountToPay() {
     return BlocBuilder<CartBloc, CartState>(
@@ -48,11 +33,11 @@ class _PaymentPageState extends State<PaymentPage> {
         final advanceAmount = cartState.grandTotal * 0.3;
         return Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           margin: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.green.shade100,
-            borderRadius: BorderRadius.circular(8),
+            color: Colors.green.shade50,
+            borderRadius: BorderRadius.circular(6),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,16 +45,16 @@ class _PaymentPageState extends State<PaymentPage> {
               Text(
                 'Amount to be paid now',
                 style: TextStyle(
-                  color: Colors.green.shade900,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
                 ),
               ),
               Text(
                 '₹${advanceAmount.toStringAsFixed(2)}',
                 style: TextStyle(
-                  color: Colors.green.shade900,
-                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade800,
+                  fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
               ),
@@ -84,127 +69,102 @@ class _PaymentPageState extends State<PaymentPage> {
     return Column(
       children: upiProviders.map((provider) {
         final isSelected = selectedProvider == provider['name'];
-        return Container(
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.transparent,
-            border: Border(
-              bottom: BorderSide(color: Colors.grey.shade300, width: 1),
-            ),
-          ),
-          child: Column(
-            children: [
-              ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                leading: Radio<String>(
-                  value: provider['name']!,
-                  groupValue: selectedProvider,
-                  onChanged: (value) {
-                    context.read<PaymentBloc>().add(SelectUPIProvider(value!));
-                  },
-                  activeColor: Colors.black,
-                  fillColor: MaterialStateProperty.all(Colors.black),
-                ),
-                title: Container(
-                  width: double.infinity,
-                  child: Text(
-                    provider['name']!,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      color: isSelected ? Colors.black : Colors.black87,
-                    ),
-                  ),
-                ),
-                trailing: Image.asset(
-                  provider['icon']!,
-                  height: 24,
-                  width: 24,
+        return Column(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 0),
+              leading: Radio<String>(
+                value: provider['name']!,
+                groupValue: selectedProvider,
+                onChanged: (value) {
+                  context.read<PaymentBloc>().add(SelectUPIProvider(value!));
+                },
+                activeColor: Colors.black,
+              ),
+              title: Text(
+                provider['name']!,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
-              if (isSelected)
-                BlocBuilder<CartBloc, CartState>(
-                  builder: (context, cartState) {
-                    final advanceAmount = cartState.grandTotal * 0.3;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green.shade800,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          ),
-                          onPressed: () {
-                            context.read<PaymentBloc>().add(
-                                  ProcessPayment(provider['name']!, advanceAmount),
-                                );
-                          },
-                          child: Text(
-                            'Pay ₹${advanceAmount.toStringAsFixed(2)}',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+              trailing: Image.asset(
+                provider['icon']!,
+                height: 24,
+                width: 24,
+              ),
+            ),
+           
+            if (isSelected)
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, cartState) {
+                  final advanceAmount = cartState.grandTotal * 0.3;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 42,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade700,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         ),
+                        onPressed: () {
+                          context.read<PaymentBloc>().add(
+                                ProcessPayment(provider['name']!, advanceAmount),
+                              );
+                        },
+                        child: Text(
+                          'Pay ₹${advanceAmount.toStringAsFixed(2)}',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
+              ),
+          ],
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildExpansionTile({
+    required String title,
+    required Widget leadingIcon,
+    required bool initiallyExpanded,
+    required Function(bool) onExpand,
+    required Widget content,
+  }) {
+    return Container(
+      
+      child: ExpansionTile(
+        initiallyExpanded: initiallyExpanded,
+        tilePadding: EdgeInsets.symmetric(horizontal: 0),
+        childrenPadding: EdgeInsets.only(left: 8, right: 8, bottom: 10),
+        title: Row(
+          children: [
+            leadingIcon,
+            SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
                 ),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildCardOptions(String? selectedCard) {
-    return Column(
-      children: cardOptions.map((card) {
-        final isSelected = selectedCard == card['name'];
-        return ListTile(
-          leading: Radio<String>(
-            value: card['name']!,
-            groupValue: selectedCard,
-            onChanged: (value) {
-              context.read<PaymentBloc>().add(SelectCardOption(value!));
-            },
-            activeColor: Colors.green,
-          ),
-          title: Text(
-            card['name']!,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? Colors.black : Colors.black87,
+              ),
             ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildNetBankingOptions(String? selectedNetBanking) {
-    return Column(
-      children: netBankingOptions.map((netBank) {
-        final isSelected = selectedNetBanking == netBank['name'];
-        return ListTile(
-          leading: Radio<String>(
-            value: netBank['name']!,
-            groupValue: selectedNetBanking,
-            onChanged: (value) {
-              context.read<PaymentBloc>().add(SelectNetBankingOption(value!));
-            },
-            activeColor: Colors.green,
-          ),
-          title: Text(
-            netBank['name']!,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? Colors.black : Colors.black87,
-            ),
-          ),
-        );
-      }).toList(),
+          ],
+        ),
+        onExpansionChanged: onExpand,
+        children: [content],
+      ),
     );
   }
 
@@ -217,7 +177,8 @@ class _PaymentPageState extends State<PaymentPage> {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Payment Successful'),
-              content: Text('Your payment of ₹${state.amount.toStringAsFixed(2)} via ${state.provider} was successful.'),
+              content: Text(
+                  'Your payment of ₹${state.amount.toStringAsFixed(2)} via ${state.provider} was successful.'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -234,17 +195,14 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Center(
-            child: Text('Payment'),
-          ),
+          title: Text('Payment'),
+          centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          elevation: 1,
+          elevation: 0.5,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
           ),
           actions: [
             IconButton(
@@ -258,94 +216,39 @@ class _PaymentPageState extends State<PaymentPage> {
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Divider(height: 1, thickness: 1, color: Colors.grey.shade300),
               _buildAmountToPay(),
-              ExpansionTile(
-                initiallyExpanded: _expandedCategory == 'UPI',
-                title: Row(
-                  children: [
-                    Image.asset('assets/images/upi_logo.png', height: 20, width: 20),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'UPI',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                    ),
-                  ],
-                ),
-                onExpansionChanged: (expanded) => _onExpansionChanged('UPI', expanded),
-                children: <Widget>[
-                  BlocBuilder<PaymentBloc, PaymentState>(
-                    builder: (context, state) {
-                      String? selectedProvider;
-                      if (state is PaymentUPISelected) {
-                        selectedProvider = state.selectedProvider;
-                      }
-                      return _buildUPIOptions(selectedProvider);
-                    },
-                  ),
-                ],
+              BlocBuilder<PaymentBloc, PaymentState>(
+                builder: (context, state) {
+                  String? selectedProvider;
+                  if (state is PaymentUPISelected) {
+                    selectedProvider = state.selectedProvider;
+                  }
+                  return _buildExpansionTile(
+                    title: 'UPI',
+                    leadingIcon: Image.asset('assets/images/upi_logo.png',
+                        height: 20, width: 20),
+                    initiallyExpanded: _expandedCategory == 'UPI',
+                    onExpand: (expanded) => _onExpansionChanged('UPI', expanded),
+                    content: _buildUPIOptions(selectedProvider),
+                  );
+                },
               ),
-              ExpansionTile(
+              _buildExpansionTile(
+                title: 'Credit/Debit/ATM Card',
+                leadingIcon: Icon(Icons.credit_card, size: 20),
                 initiallyExpanded: _expandedCategory == 'Credit/Debit/ATM Card',
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.credit_card, size: 20),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'Credit/Debit/ATM Card',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                onExpansionChanged: (expanded) => _onExpansionChanged('Credit/Debit/ATM Card', expanded),
-                children: <Widget>[
-                  BlocBuilder<PaymentBloc, PaymentState>(
-                    builder: (context, state) {
-                      String? selectedCard;
-                      if (state is PaymentCardSelected) {
-                        selectedCard = state.selectedCardOption;
-                      }
-                      return _buildCardOptions(selectedCard);
-                    },
-                  ),
-                ],
+                onExpand: (expanded) =>
+                    _onExpansionChanged('Credit/Debit/ATM Card', expanded),
+                content: SizedBox(height: 40), // Placeholder for card options
               ),
-              ExpansionTile(
+              _buildExpansionTile(
+                title: 'Net Banking',
+                leadingIcon: Icon(Icons.account_balance, size: 20),
                 initiallyExpanded: _expandedCategory == 'Net Banking',
-                title: Row(
-                  children: [
-                    Icon(Icons.account_balance, size: 20),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Net Banking',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                    ),
-                  ],
-                ),
-                onExpansionChanged: (expanded) => _onExpansionChanged('Net Banking', expanded),
-                children: <Widget>[
-                  BlocBuilder<PaymentBloc, PaymentState>(
-                    builder: (context, state) {
-                      String? selectedNetBanking;
-                      if (state is PaymentNetBankingSelected) {
-                        selectedNetBanking = state.selectedNetBankingOption;
-                      }
-                      return _buildNetBankingOptions(selectedNetBanking);
-                    },
-                  ),
-                ],
+                onExpand: (expanded) => _onExpansionChanged('Net Banking', expanded),
+                content: SizedBox(height: 40), // Placeholder for net banking
               ),
             ],
           ),
