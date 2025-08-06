@@ -25,8 +25,29 @@ class OrderSummaryPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildHeader(),
+                      SizedBox(height: 16),
+                      _buildSectionHeader('BOOKING DETAILS'),
                       _buildBookingDetails(state),
+                      SizedBox(height: 16),
+                      _buildSectionHeader('PAYMENT SUMMARY'),
                       _buildPaymentSummary(state),
+                      SizedBox(height: 16),
+                      _buildSectionHeader(
+                        'ORDER SUMMARY',
+                        trailing: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/cartItems');
+                          },
+                          child: Text(
+                            'View items',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
                       _buildOrderSummary(context),
                     ],
                   ),
@@ -43,10 +64,10 @@ class OrderSummaryPage extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
-        color:Color.fromRGBO(226, 161, 70, 1),
+        color: Color.fromRGBO(226, 161, 70, 1),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40)
+          bottomRight: Radius.circular(40),
         ),
       ),
       padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
@@ -80,29 +101,49 @@ class OrderSummaryPage extends StatelessWidget {
       ),
     );
   }
+ 
+
+  Widget _buildSectionHeader(String title, {Widget? trailing}) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Colors.black87, width: 1),
+          bottom: BorderSide(color: Colors.black87, width: 1),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Colors.black87,
+            ),
+          ),
+          if (trailing != null) trailing,
+        ],
+      ),
+    );
+  }
 
   Widget _buildBookingDetails(OrderSummaryState state) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'BOOKING DETAILS',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-          SizedBox(height: 8),
           Center(
             child: Text(
               'The Grand Kitchen-Multi Cuisine Restaurant',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: Colors.brown.shade700,
+                color: Colors.red.shade900,
               ),
             ),
           ),
@@ -120,18 +161,15 @@ class OrderSummaryPage extends StatelessWidget {
 
   Widget _buildDetailRow(IconData icon, String text) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.black87),
+          Icon(icon, size: 18, color: Colors.black87),
           SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.black87),
             ),
           ),
         ],
@@ -140,20 +178,16 @@ class OrderSummaryPage extends StatelessWidget {
   }
 
   Widget _buildStatusRow(String label, String status) {
-    Color statusColor = Colors.green;
-    if (status.toLowerCase() != 'confirmed') {
-      statusColor = Colors.red;
-    }
+    Color statusColor = status.toLowerCase() == 'confirmed' ? Colors.green : Colors.red;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
+          Icon(Icons.verified, size: 18, color: statusColor),
+          SizedBox(width: 8),
           Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
+            '$label',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           Text(
             status,
@@ -172,17 +206,7 @@ class OrderSummaryPage extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'PAYMENT SUMMARY',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-          SizedBox(height: 12),
           _buildPaymentRow('Items Total', '₹${state.itemsTotal?.toStringAsFixed(2) ?? '-'}'),
           _buildPaymentRow('Tax', '₹${state.tax?.toStringAsFixed(2) ?? '-'}'),
           Divider(color: Colors.grey.shade400, height: 24),
@@ -196,7 +220,7 @@ class OrderSummaryPage extends StatelessWidget {
 
   Widget _buildPaymentRow(String label, String amount, {bool isTotal = false}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -226,32 +250,6 @@ class OrderSummaryPage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'ORDER SUMMARY',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/cartItems');
-                },
-                child: Text(
-                  'View items',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: const Color.fromARGB(255, 14, 15, 15),
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
-          ),
           SizedBox(height: 12),
           Text(
             'THANK YOU',

@@ -76,66 +76,21 @@ class ReservationConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRestaurantName(BuildContext context, String? confirmationNumber) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Text(
-            'The Grand Kitchen-Multi Cuisine Restaurant',
-            style: TextStyle(
-              color: Colors.brown.shade400,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 8),
-          if (confirmationNumber != null)
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.green.shade300),
-              ),
-              child: Text(
-                'Confirmation #: $confirmationNumber',
-                style: TextStyle(
-                  color: Colors.green.shade800,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            )
-          else
-            BlocBuilder<ReservationConfirmationBloc, ReservationConfirmationState>(
-              builder: (context, state) {
-                if (state.confirmationNumber != null) {
-                  return Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.green.shade100,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.green.shade300),
-                    ),
-                    child: Text(
-                      'Confirmation #: ${state.confirmationNumber}',
-                      style: TextStyle(
-                        color: Colors.green.shade800,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  );
-                }
-                return SizedBox.shrink();
-              },
-            ),
-        ],
+ Widget _buildRestaurantName(BuildContext context, String? confirmationNumber) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0), // Removed vertical gap
+    child: Text(
+      'The Grand Kitchen-Multi Cuisine Restaurant',
+      style: TextStyle(
+        color: Colors.brown.shade400,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
-    );
-  }
+      textAlign: TextAlign.center,
+    ),
+  );
+}
+
 
   Widget _buildSummaryDetails(BuildContext context) {
     return Padding(
@@ -160,7 +115,7 @@ class ReservationConfirmationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Items list', style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text('View items', style: TextStyle(color: const Color.fromARGB(255, 9, 12, 15), decoration: TextDecoration.underline)),
+                    Text('View items', style: TextStyle(color: const Color.fromARGB(255, 15, 17, 20), decoration: TextDecoration.underline)),
                   ],
                 ),
               ],
@@ -346,7 +301,7 @@ class ReservationConfirmationPage extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 41, 100, 63),
+            backgroundColor: Colors.green.shade800,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           onPressed: () {
