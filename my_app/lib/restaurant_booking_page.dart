@@ -39,7 +39,7 @@ class RestaurantBookingPage extends StatelessWidget {
                         ),
                         const Text(
                           "The Grand Kitchen-Multi Cuisine",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const Text("North-Indian Restaurant"),
                         SizedBox(height: 20),
@@ -60,7 +60,7 @@ class RestaurantBookingPage extends StatelessWidget {
                               },
                             ),
                             DropdownButton(
-                              hint: const Text("date"),
+                              hint: const Text("day"),
                               value: state.date.isNotEmpty ? state.date : null,
                               items: dates.map((date) {
                                 return DropdownMenuItem(
@@ -110,13 +110,29 @@ class RestaurantBookingPage extends StatelessWidget {
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: state.selectedSlot.isNotEmpty ? Colors.green : Colors.green[200],
-                        minimumSize: const Size(double.infinity, 50),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: state.selectedSlot.isNotEmpty 
+                              ? Colors.green.shade800 
+                              : Colors.green.shade200,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: state.selectedSlot.isNotEmpty ? () {} : null,
+                        child: Text(
+                          'NEXT',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                      onPressed: state.selectedSlot.isNotEmpty ? () {} : null,
-                      child: const Text("NEXT"),
                     ),
                   )
                 ],
