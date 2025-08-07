@@ -1,98 +1,41 @@
-import 'package:equatable/equatable.dart';
-
-enum ReservationStatus { initial, loading, success, failure }
-
-class ReservationState extends Equatable {
-  final String selectedPeople;
-  final String selectedDate;
-  final String selectedTime;
+class ReservationState {
+  final String partySize;
+  final String date;
+  final String time;
+  final List<String> timeSlots;
   final String selectedSlot;
-  final List<String> selectedTables;
-  final ReservationStatus status;
-  final String? errorMessage;
-  final List<String> availableTimeSlots;
-  final List<String> bookedTimeSlots;
-  final bool isFormValid;
-  final String? confirmationNumber;
 
-  const ReservationState({
-    this.selectedPeople = '2',
-    this.selectedDate = 'today',
-    this.selectedTime = '06:00',
-    this.selectedSlot = '',
-    this.selectedTables = const [],
-    this.status = ReservationStatus.success,
-    this.errorMessage,
-    this.availableTimeSlots = const [
-      '05:00 PM',
-      '05:30 PM',
-      '06:00 PM',
-      '06:30 PM',
-      '07:00 PM',
-      '07:30 PM',
-      '08:00 PM',
-      '09:30 PM',
-    ],
-    this.bookedTimeSlots = const [
-      '05:00 PM',
-      '07:00 PM',
-      '08:00 PM',
-    ],
-    this.isFormValid = false,
-    this.confirmationNumber,
+  ReservationState({
+    required this.partySize,
+    required this.date,
+    required this.time,
+    required this.timeSlots,
+    required this.selectedSlot,
   });
 
-  ReservationState copyWith({
-    String? selectedPeople,
-    String? selectedDate,
-    String? selectedTime,
-    String? selectedSlot,
-    List<String>? selectedTables,
-    ReservationStatus? status,
-    String? errorMessage,
-    List<String>? availableTimeSlots,
-    List<String>? bookedTimeSlots,
-    bool? isFormValid,
-    String? confirmationNumber,
-  }) {
+  factory ReservationState.initial() {
     return ReservationState(
-      selectedPeople: selectedPeople ?? this.selectedPeople,
-      selectedDate: selectedDate ?? this.selectedDate,
-      selectedTime: selectedTime ?? this.selectedTime,
-      selectedSlot: selectedSlot ?? this.selectedSlot,
-      selectedTables: selectedTables ?? this.selectedTables,
-      status: status ?? this.status,
-      errorMessage: errorMessage,
-      availableTimeSlots: availableTimeSlots ?? this.availableTimeSlots,
-      bookedTimeSlots: bookedTimeSlots ?? this.bookedTimeSlots,
-      isFormValid: isFormValid ?? this.isFormValid,
-      confirmationNumber: confirmationNumber ?? this.confirmationNumber,
+      partySize: '',
+      date: '',
+      time: '',
+      timeSlots: [],
+      selectedSlot: '',
     );
   }
 
-  bool get isTimeSlotSelected => selectedSlot.isNotEmpty;
-  bool get isAllFieldsSelected => selectedPeople.isNotEmpty && 
-                                selectedDate.isNotEmpty && 
-                                selectedTime.isNotEmpty && 
-                                selectedSlot.isNotEmpty &&
-                                selectedTables.isNotEmpty;
-
-  bool isTimeSlotBooked(String timeSlot) {
-    return bookedTimeSlots.contains(timeSlot);
+  ReservationState copyWith({
+    String? partySize,
+    String? date,
+    String? time,
+    List<String>? timeSlots,
+    String? selectedSlot,
+  }) {
+    return ReservationState(
+      partySize: partySize ?? this.partySize,
+      date: date ?? this.date,
+      time: time ?? this.time,
+      timeSlots: timeSlots ?? this.timeSlots,
+      selectedSlot: selectedSlot ?? this.selectedSlot,
+    );
   }
-
-  @override
-  List<Object?> get props => [
-    selectedPeople, 
-    selectedDate, 
-    selectedTime, 
-    selectedSlot, 
-    selectedTables,
-    status, 
-    errorMessage,
-    availableTimeSlots,
-    bookedTimeSlots,
-    isFormValid,
-    confirmationNumber,
-  ];
 }

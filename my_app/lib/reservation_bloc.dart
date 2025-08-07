@@ -3,123 +3,46 @@ import 'reservation_event.dart';
 import 'reservation_state.dart';
 
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
-  ReservationBloc() : super(const ReservationState()) {
-    on<SelectPeople>(_onSelectPeople);
-    on<SelectDate>(_onSelectDate);
-    on<SelectTime>(_onSelectTime);
-    on<SelectTimeSlot>(_onSelectTimeSlot);
-    on<ResetReservation>(_onResetReservation);
-    on<SubmitReservation>(_onSubmitReservation);
-    on<LoadTimeSlots>(_onLoadTimeSlots);
-  }
+  ReservationBloc() : super(ReservationState.initial()) {
+    on<PartySizeSelected>((event, emit) {
+      emit(state.copyWith(partySize: event.partySize));
+      _checkAndUpdateSlots(emit);
+    });
 
-  void _onSelectPeople(SelectPeople event, Emitter<ReservationState> emit) {
-    emit(state.copyWith(
-      selectedPeople: event.people,
-      isFormValid: _validateForm(event.people, state.selectedDate, state.selectedTime, state.selectedSlot),
-    ));
-  }
+    on<DateSelected>((event, emit) {
+      emit(state.copyWith(date: event.date));
+      _checkAndUpdateSlots(emit);
+    });
 
-  void _onSelectDate(SelectDate event, Emitter<ReservationState> emit) {
-    emit(state.copyWith(
-      selectedDate: event.date,
-      isFormValid: _validateForm(state.selectedPeople, event.date, state.selectedTime, state.selectedSlot),
-    ));
-  }
+    on<TimeSelected>((event, emit) {
+      emit(state.copyWith(time: event.time));
+      _checkAndUpdateSlots(emit);
+    });
 
-  void _onSelectTime(SelectTime event, Emitter<ReservationState> emit) {
-    emit(state.copyWith(
-      selectedTime: event.time,
-      isFormValid: _validateForm(state.selectedPeople, state.selectedDate, event.time, state.selectedSlot),
-    ));
-  }
-
-  void _onSelectTimeSlot(SelectTimeSlot event, Emitter<ReservationState> emit) {
-    // Check if the time slot is booked
-    if (state.isTimeSlotBooked(event.slot)) {
-      // Don't allow selection of booked slots
-      return;
-    }
-    
-    emit(state.copyWith(
-      selectedSlot: event.slot,
-      isFormValid: _validateForm(state.selectedPeople, state.selectedDate, state.selectedTime, event.slot),
-    ));
-  }
-
-  void _onResetReservation(ResetReservation event, Emitter<ReservationState> emit) {
-    // Reset only the status and error message, keep the form data
-    emit(state.copyWith(
-      status: ReservationStatus.initial,
-      errorMessage: null,
-    ));
-  }
-
-  void _onSubmitReservation(SubmitReservation event, Emitter<ReservationState> emit) async {
-    if (!state.isAllFieldsSelected) {
+    on<TimeSlotTapped>((event, emit) {
       emit(state.copyWith(
-        status: ReservationStatus.failure,
-        errorMessage: 'Please fill all required fields',
+        selectedSlot: event.selectedSlot,
+        time: event.selectedSlot,
       ));
-      return;
-    }
+    });
+  }
 
-    emit(state.copyWith(status: ReservationStatus.loading));
-
-    try {
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-      
-      // Generate a confirmation number (in a real app, this would come from the backend)
-      final confirmationNumber = 'CONF-${DateTime.now().millisecondsSinceEpoch.toString().substring(6)}';
-      
-      emit(state.copyWith(
-        status: ReservationStatus.success,
-        errorMessage: null,
-        confirmationNumber: confirmationNumber,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        status: ReservationStatus.failure,
-        errorMessage: 'Failed to submit reservation: ${e.toString()}',
-      ));
+  void _checkAndUpdateSlots(Emitter<ReservationState> emit) {
+    if (state.partySize.isNotEmpty && state.date.isNotEmpty && state.time.isNotEmpty) {
+      emit(state.copyWith(timeSlots: _getTimeSlots()));
     }
   }
 
-  void _onLoadTimeSlots(LoadTimeSlots event, Emitter<ReservationState> emit) async {
-    emit(state.copyWith(status: ReservationStatus.loading));
-
-    try {
-      // Simulate loading time slots from API
-      await Future.delayed(const Duration(milliseconds: 500));
-      
-      final timeSlots = [
-        '05:00 PM',
-        '05:30 PM',
-        '06:00 PM',
-        '06:30 PM',
-        '07:00 PM',
-        '07:30 PM',
-        '08:00 PM',
-        '09:30 PM',
-      ];
-
-      emit(state.copyWith(
-        availableTimeSlots: timeSlots,
-        status: ReservationStatus.success,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        status: ReservationStatus.failure,
-        errorMessage: 'Failed to load time slots: ${e.toString()}',
-      ));
-    }
-  }
-
-  bool _validateForm(String people, String date, String time, String slot) {
-    return people.isNotEmpty && 
-           date.isNotEmpty && 
-           time.isNotEmpty && 
-           slot.isNotEmpty;
+  List<String> _getTimeSlots() {
+    return [
+      "05:00 PM",
+      "05:30 PM",
+      "06:00 PM",
+      "06:30 PM",
+      "07:00 PM",
+      "07:30 PM",
+      "08:00 PM",
+      "09:30 PM",
+    ];
   }
 }
