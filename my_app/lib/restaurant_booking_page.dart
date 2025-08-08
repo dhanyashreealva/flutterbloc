@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'reservation_bloc.dart';
 import 'reservation_event.dart';
 import 'reservation_state.dart';
-import 'widgets/time_slot_widget.dart';
-
 
 class RestaurantBookingPage extends StatelessWidget {
-  final List<String> partySizes = ['1', '2', '3', '4', '5','6','7','8','9','10+'];
-  final List<String> dates = ['today', 'tomorrow','day after tomorrow'];
-  final List<String> times = ['05:00 PM', '05:30 PM', '06:00 PM','6:30 PM','7:00 PM','7:30 PM','8:00 PM','9:30 PM'];
+  final List<String> partySizes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'];
+  final List<String> dates = ['today', 'tomorrow', 'day after tomorrow'];
+  final List<String> times = [
+    '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
+    '07:00 PM', '07:30 PM', '08:00 PM', '09:30 PM'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class RestaurantBookingPage extends StatelessWidget {
               return Column(
                 children: [
                   Container(
-                    color: Color.fromRGBO(226, 161, 70, 1),
+                    color: const Color.fromRGBO(226, 161, 70, 1),
                     padding: const EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,72 +43,144 @@ class RestaurantBookingPage extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const Text("North-Indian Restaurant"),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
+
+                        // Row for dropdowns
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            DropdownButton(
-                              hint: const Text("party"),
-                              value: state.partySize.isNotEmpty ? state.partySize : null,
-                              items: partySizes.map((size) {
-                                return DropdownMenuItem(
-                                  value: size,
-                                  child: Text(size),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                bloc.add(PartySizeSelected(value!));
-                              },
+                            // Party size dropdown
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: Colors.grey.shade400),
+                              ),
+                              child: SizedBox(
+                                height: 40,
+                                child: DropdownButton<String>(
+                                  isDense: true,
+                                  value: state.partySize.isNotEmpty ? state.partySize : null,
+                                  underline: const SizedBox(),
+                                  hint: const Text("party"),
+                                  items: partySizes.map((size) {
+                                    return DropdownMenuItem(
+                                      value: size,
+                                      child: Text(size),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    bloc.add(PartySizeSelected(value!));
+                                  },
+                                ),
+                              ),
                             ),
-                            DropdownButton(
-                              hint: const Text("day"),
-                              value: state.date.isNotEmpty ? state.date : null,
-                              items: dates.map((date) {
-                                return DropdownMenuItem(
-                                  value: date,
-                                  child: Text(date),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                bloc.add(DateSelected(value!));
-                              },
+
+                            // Day dropdown
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: Colors.grey.shade400),
+                              ),
+                              child: SizedBox(
+                                height: 40,
+                                child: DropdownButton<String>(
+                                  isDense: true,
+                                  value: state.date.isNotEmpty ? state.date : null,
+                                  underline: const SizedBox(),
+                                  hint: const Text("day"),
+                                  items: dates.map((date) {
+                                    return DropdownMenuItem(
+                                      value: date,
+                                      child: Text(date),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    bloc.add(DateSelected(value!));
+                                  },
+                                ),
+                              ),
                             ),
-                            DropdownButton(
-                              hint: const Text("time"),
-                              value: state.time.isNotEmpty ? state.time : null,
-                              items: times.map((time) {
-                                return DropdownMenuItem(
-                                  value: time,
-                                  child: Text(time),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                bloc.add(TimeSelected(value!));
-                              },
+
+                            // Time dropdown
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: Colors.grey.shade400),
+                              ),
+                              child: SizedBox(
+                                height: 40,
+                                child: DropdownButton<String>(
+                                  isDense: true,
+                                  value: state.time.isNotEmpty ? state.time : null,
+                                  underline: const SizedBox(),
+                                  hint: const Text("time"),
+                                  items: times.map((time) {
+                                    return DropdownMenuItem(
+                                      value: time,
+                                      child: Text(time),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    bloc.add(TimeSelected(value!));
+                                  },
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
+
+                  // Available time slots section
                   if (state.timeSlots.isNotEmpty) ...[
                     const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("Available time slots:"),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Available time slots:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                     Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: state.timeSlots.map((slot) {
-                        return TimeSlotWidget(
-                          time: slot,
-                          selected: state.selectedSlot,
-                          onTap: () {
-                            bloc.add(TimeSlotTapped(slot));
-                          },
+                        final isSelected = slot == state.selectedSlot;
+                        return GestureDetector(
+                          onTap: () => bloc.add(TimeSlotTapped(slot)),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: isSelected ? Colors.green.shade800 : Colors.white,
+                              borderRadius: BorderRadius.circular(20), // pill shape
+                              border: Border.all(
+                                color: isSelected ? Colors.green.shade800 : Colors.grey.shade400,
+                              ),
+                            ),
+                            child: Text(
+                              slot,
+                              style: TextStyle(
+                                color: isSelected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                         );
                       }).toList(),
                     ),
                   ],
+
                   const Spacer(),
+
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: SizedBox(
@@ -115,8 +188,8 @@ class RestaurantBookingPage extends StatelessWidget {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: state.selectedSlot.isNotEmpty 
-                              ? Colors.green.shade800 
+                          backgroundColor: state.selectedSlot.isNotEmpty
+                              ? Colors.green.shade800
                               : Colors.green.shade200,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -124,7 +197,7 @@ class RestaurantBookingPage extends StatelessWidget {
                           elevation: 2,
                         ),
                         onPressed: state.selectedSlot.isNotEmpty ? () {} : null,
-                        child: Text(
+                        child: const Text(
                           'NEXT',
                           style: TextStyle(
                             fontSize: 16,
