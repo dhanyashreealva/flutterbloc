@@ -1,4 +1,4 @@
-class CustomTableImageWidget extends StatelessWidget {
+class CustomTableImageWidget extends chairBox {
   final String label;
   final String imagePath;
   final double width;
