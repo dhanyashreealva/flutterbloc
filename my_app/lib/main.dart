@@ -15,6 +15,7 @@ import 'reservation_confirmation_event.dart';
 import 'restaurant_booking_page.dart';
 import 'payment_bloc.dart';
 //import 'menuPage.dart';
+import 'tableselection.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         title: 'Reservation Confirmation',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.green),
-        home:CartLikeScreen(),
+        home:SelectTableScreen(),
         routes: {
           '/confirmation': (context) => ReservationConfirmationPage(),
           '/booking': (context) => RestaurantBookingPage(),
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           '/cart': (context) => CartPage(),
           '/cartItems': (context) => CartItemsPage(),
           '/MenuPage':(context)=>CartLikeScreen(),
+          '/Tableselection':(context)=>SelectTableScreen(),
         },
       ),
     );

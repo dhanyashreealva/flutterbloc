@@ -64,6 +64,7 @@ class RestaurantBookingPage extends StatelessWidget {
                                   value: state.partySize.isNotEmpty ? state.partySize : null,
                                   underline: const SizedBox(),
                                   hint: const Text("party"),
+                                   alignment: Alignment.center,
                                   items: partySizes.map((size) {
                                     return DropdownMenuItem(
                                       value: size,
@@ -92,6 +93,7 @@ class RestaurantBookingPage extends StatelessWidget {
                                   value: state.date.isNotEmpty ? state.date : null,
                                   underline: const SizedBox(),
                                   hint: const Text("day"),
+                                   alignment: Alignment.center,
                                   items: dates.map((date) {
                                     return DropdownMenuItem(
                                       value: date,
@@ -120,6 +122,7 @@ class RestaurantBookingPage extends StatelessWidget {
                                   value: state.time.isNotEmpty ? state.time : null,
                                   underline: const SizedBox(),
                                   hint: const Text("time"),
+                                   alignment: Alignment.center,
                                   items: times.map((time) {
                                     return DropdownMenuItem(
                                       value: time,
