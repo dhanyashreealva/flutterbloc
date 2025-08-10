@@ -1,75 +1,54 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MaterialApp(home: SelectTableScreen()));
-}
+import 'widgets/CustomTableimagewidget.dart'; // Your CustomTableImageWidget
 
 class SelectTableScreen extends StatelessWidget {
+  const SelectTableScreen({Key? key}) : super(key: key);
+
+  // Round table with chairs
+  Widget roundTable(String label, String imagePath) {
+    return SizedBox(
+      width: 90,
+      height: 90,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CustomTableImageWidget(
+            label: label,
+            imagePath: imagePath,
+            width: 70,
+            height: 70,
+          ),
+          _chair(top: 5, left: 32),
+          _chair(bottom: 5, left: 32),
+          _chair(left: 5, top: 32),
+          _chair(right: 5, top: 32),
+          _chair(top: 18, right: 18),
+          _chair(top: 18, left: 18),
+          _chair(bottom: 18, right: 18),
+          _chair(bottom: 18, left: 18),
+        ],
+      ),
+    );
+  }
+
+  // Chair widget for positioning
+  static Widget _chair({double? top, double? bottom, double? left, double? right}) {
+    return Positioned(
+      top: top,
+      bottom: bottom,
+      left: left,
+      right: right,
+      child: CustomTableImageWidget(
+        label: '',
+        imagePath: 'assets/images/rectangle4.png',
+        width: 20,
+        height: 20,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Custom table widget
-    Widget tableBox(String label,
-        {double width = 60, double height = 40, double borderRadius = 6}) {
-      return Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(borderRadius),
-          border: Border.all(color: Colors.grey.shade500),
-        ),
-        alignment: Alignment.center,
-        child: Text(label, style: TextStyle(fontSize: 10)),
-      );
-    }
-     Widget chairBox({double size = 20}) {
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Colors.grey.shade500),
-        ),
-      );
-    }
-
-
-    // Round table with chairs around it
-    Widget roundTable(String label) {
-      return SizedBox(
-        width: 90,
-        height: 90,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.grey.shade500),
-              ),
-              alignment: Alignment.center,
-              child: Text(label, style: TextStyle(fontSize: 10)),
-            ),
-            // Chairs positions
-            Positioned(top: 5, left: 32, child: chairBox()),
-            Positioned(bottom: 5, left: 32, child: chairBox()),
-            Positioned(left: 5, top: 32, child: chairBox()),
-            Positioned(right: 5, top: 32, child: chairBox()),
-            Positioned(top: 18, right: 18, child: chairBox(size: 15)),
-            Positioned(top: 18, left: 18, child: chairBox(size: 15)),
-            Positioned(bottom: 18, right: 18, child: chairBox(size: 15)),
-            Positioned(bottom: 18, left: 18, child: chairBox(size: 15)),
-          ],
-        ),
-      );
-    }
-
-    // Chair widget
-   
     return Scaffold(
       appBar: AppBar(
         title: const Text('SELECT TABLE'),
@@ -78,227 +57,309 @@ class SelectTableScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.home_outlined, color: Colors.black),
-            onPressed: () {
-              // TODO: Implement home navigation if needed
-              print("Home pressed");
-            },
+            icon: const Icon(Icons.home_outlined, color: Colors.black),
+            onPressed: () => print("Home pressed"),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Column(
-          children: [
-            // R3/AC area
-            Expanded(
-              flex: 3,
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400)),
-                child: Stack(
-                  children: [
-                    // Tables in grid style top left
-                    Positioned(
-                      top: 8,
-                      left: 8,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              tableBox('R4/13'),
-                              SizedBox(width: 15),
-                              tableBox('R4/13'),
-                            ],
-                          ),
-                          SizedBox(height: 15),
-                          Row(
-                            children: [
-                              tableBox('R4/12'),
-                              SizedBox(width: 15),
-                              roundTable('R4/13'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Big round table top right
-                    Positioned(
-                      top: 25,
-                      right: 15,
-                      child: roundTable('R4/13'),
-                    ),
-                    Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Text('R3/AC', style: TextStyle(fontSize: 11)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double w = constraints.maxWidth;
+          double h = constraints.maxHeight;
 
-            // R2/AC area
-            Expanded(
-              flex: 4,
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400)),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 15,
-                      left: 8,
-                      child: Column(
-                        children: [
-                          Row(
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                // R3/AC
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade400),
+                    ),
+                    child: Stack(
+                      children: [
+                        // First row
+                        Positioned(
+                          top: h * 0.02,
+                          left: w * 0.02,
+                          child: Row(
                             children: [
-                              tableBox('R3/12'),
-                              SizedBox(width: 10),
-                              tableBox('R3/13'),
-                              SizedBox(width: 10),
-                              tableBox('R3/12'),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/square6.png',
+                                width:40,
+                                height: 40,
+                              ),
+                              SizedBox(width: w * 0.03),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/square6.png',
+                              ),
                             ],
                           ),
-                          SizedBox(height: 10),
-                          Row(
+                        ),
+                        // Second row
+                        Positioned(
+                          top: h * 0.14,
+                          left: w * 0.02,
+                          child: Row(
                             children: [
-                              tableBox('R4/13'),
-                              SizedBox(width: 10),
-                              roundTable('R4/10'),
-                              SizedBox(width: 10),
-                              roundTable('R4/13'),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/square4.png',
+                              ),
+                              SizedBox(width: w * 0.03),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/square6.png',
+                              ),
                             ],
                           ),
-                          SizedBox(height: 10),
-                          Row(
+                        ),
+                        // Large round table right
+                        Positioned(
+                          top: h * 0.06,
+                          right: w * 0.05,
+                          child: CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/circle6.png',
+                              ),
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: const Text('R3/AC', style: TextStyle(fontSize: 11)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+
+                // R2/AC
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade400),
+                    ),
+                    child: Stack(
+                      children: [
+                        // Grid layout
+                        Positioned(
+                          top: h * 0.02,
+                          left: w * 0.02,
+                          child: Column(
                             children: [
-                              tableBox('R4/13'),
-                              SizedBox(width: 10),
-                              roundTable('R4/15'),
+                              Row(
+                                children: [
+                                  CustomTableImageWidget(
+                                    label: 'R413',
+                                    imagePath: 'assets/images/square4.png',
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  CustomTableImageWidget(
+                                    label: 'R413',
+                                    imagePath: 'assets/images/square4.png',
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  CustomTableImageWidget(
+                                    label: 'R413',
+                                    imagePath: 'assets/images/square4.png',
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: h * 0.02),
+                              Row(
+                                children: [
+                                  CustomTableImageWidget(
+                                    label: 'R413',
+                                    imagePath: 'assets/images/square4.png',
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  roundTable('R413', 'assets/images/circle4.png'),
+                                  SizedBox(width: w * 0.02),
+                                  roundTable('R413', 'assets/images/circle4.png'),
+                                ],
+                              ),
+                              SizedBox(height: h * 0.02),
+                              Row(
+                                children: [
+                                  CustomTableImageWidget(
+                                    label: 'R413',
+                                    imagePath: 'assets/images/square4.png',
+                                  ),
+                                  SizedBox(width: w * 0.02),
+                                  roundTable('R413', 'assets/images/circle4.png'),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        // Right vertical tables
+                        Positioned(
+                          top: h * 0.05,
+                          right: w * 0.05,
+                          child: Column(
+                            children: [
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/rectangle4.png',
+                                width: 30,
+                                height: 60,
+                              ),
+                              SizedBox(height: h * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/rectangle4.png',
+                                width: 30,
+                                height: 60,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: const Text('R2/AC', style: TextStyle(fontSize: 11)),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      right: 10,
-                      top: 20,
-                      child: Column(
-                        children: [
-                          tableBox('R4/11', width: 30, height: 60),
-                          SizedBox(height: 10),
-                          tableBox('R4/10', width: 30, height: 60),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Text('R2/AC', style: TextStyle(fontSize: 11)),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 8),
+                SizedBox(height: 8),
 
-            // R1/non-AC area
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400)),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 15,
-                      left: 5,
-                      child: Row(
-                        children: [
-                          tableBox('R1/12', width: 40, height: 40),
-                          SizedBox(width: 10),
-                          tableBox('R1/11', width: 40, height: 40),
-                          SizedBox(width: 10),
-                          tableBox('R1/10', width: 40, height: 40),
-                        ],
-                      ),
+                // R1/non-AC
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade400),
                     ),
-                    Positioned(
-                      top: 50,
-                      left: 5,
-                      child: Row(
-                        children: [
-                          tableBox('R1/12', width: 40, height: 40),
-                          SizedBox(width: 10),
-                          tableBox('R1/11', width: 40, height: 40),
-                          SizedBox(width: 10),
-                          tableBox('R1/10', width: 40, height: 40),
-                        ],
-                      ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: h * 0.02,
+                          left: w * 0.02,
+                          child: Row(
+                            children: [
+                              CustomTableImageWidget(
+                                label: 'R112',
+                                imagePath: 'assets/images/square2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(width: w * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R111',
+                                imagePath: 'assets/images/circle2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(width: w * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R112',
+                                imagePath: 'assets/images/square2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: h * 0.08,
+                          left: w * 0.02,
+                          child: Row(
+                            children: [
+                              CustomTableImageWidget(
+                                label: 'R112',
+                                imagePath: 'assets/images/square2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(width: w * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R111',
+                                imagePath: 'assets/images/circle2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(width: w * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R112',
+                                imagePath: 'assets/images/square2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: h * 0.05,
+                          right: w * 0.05,
+                          child: Row(
+                            children: [
+                              CustomTableImageWidget(
+                                label: 'R112',
+                                imagePath: 'assets/images/square2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(height: h * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R111',
+                                imagePath: 'assets/images/circle2.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                              SizedBox(height: h * 0.02),
+                              
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 5,
+                          left: w * 0.1,
+                          child: const Text(
+                            'Entrance',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                          ),
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: const Text('R1/non-AC', style: TextStyle(fontSize: 11)),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      top: 20,
-                      right: 10,
-                      child: Column(
-                        children: [
-                          tableBox('R1/10', width: 30, height: 60),
-                          SizedBox(height: 10),
-                          tableBox('R1/11', width: 30, height: 60),
-                          SizedBox(height: 10),
-                          tableBox('R1/12', width: 30, height: 60),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      left: 20,
-                      child: Text(
-                        'Entrance',
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                      ),
-                    ),
-                    Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Text('R1/non-AC', style: TextStyle(fontSize: 11)),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+                SizedBox(height: 10),
 
-            SizedBox(height: 10),
-
-            // Next button
-            SizedBox(
-              width: double.infinity,
-              height: 45,
-              child: ElevatedButton(
-                onPressed: () {
-                  print("Next button pressed");
-                },
-                child: Text(
-                  'NEXT',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                // Next button
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: () => print("Next button pressed"),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800]),
+                    child: const Text(
+                      'NEXT',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800]),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

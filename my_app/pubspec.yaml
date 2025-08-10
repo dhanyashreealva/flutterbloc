@@ -70,14 +70,14 @@ flutter:
     - assets/images/momos.jpg
     - assets/images/chicken_mandi.jpeg
     - assets/images/kadai_chicken.jpeg
-    - assets/images/tables/circle2.png
-    - assets/images/tables/circle4.png
-    - assets/images/tables/circle6.png
-    - assets/images/tables/rectangle4.png
-    - assets/images/tables/rectangle6.png
-    - assets/images/tables/rectangle8.png
-    - assets/images/tables/square2.png
-    - assets/images/tables/square4.png
+    - assets/images/circle2.png
+    - assets/images/circle4.png
+    - assets/images/circle6.png
+    - assets/images/rectangle4.png
+    - assets/images/rectangle6.png
+    - assets/images/rectangle8.png
+    - assets/images/square2.png
+    - assets/images/square4.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
