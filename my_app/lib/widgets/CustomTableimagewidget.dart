@@ -66,17 +66,11 @@ class TableScreen extends StatelessWidget {
 
   // LIST OF TABLES
   final List<TableModel> tables = [
-    TableModel('R1', 'assets/images/circle2.png'),
-    TableModel('R1', 'assets/images/square2.png'),
-    TableModel('R2', 'assets/images/rectangle4.png'),
-    TableModel('R2', 'assets/images/square4.png'),
-    TableModel('R2', 'assets/images/circle4.png'),
-    TableModel('R2', 'assets/images/circle6.png'),
-    TableModel('R3', 'assets/images/circle4.png'),
-    TableModel('R3', 'assets/images/square4.png'),
-    TableModel('R3', 'assets/images/rectangle6.png'),
-    TableModel('R3', 'assets/images/circle6.png'),
-    
+    TableModel('R1', 'assets/tables/table_type1.png'),
+    TableModel('R2', 'assets/tables/table_type2.png'),
+    TableModel('R3', 'assets/tables/table_type3.png'),
+    TableModel('R4', 'assets/tables/table_type4.png'),
+    TableModel('R5', 'assets/tables/table_type5.png'),
     // Add more as needed
   ];
 

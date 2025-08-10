@@ -78,7 +78,7 @@ class SelectTableScreen extends StatelessWidget {
               children: [
                 // R3/AC
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade400),
@@ -87,13 +87,14 @@ class SelectTableScreen extends StatelessWidget {
                       children: [
                         // First row
                         Positioned(
-                          top: h * 0.01,
+                          top: h * 0.009,
                           left: w * 0.02,
                           child: Row(
                             children: [
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/rectangle6.png',
+                                //isAvailable: true,
                                 width: 90,
                                 height: 90,
                               ),
@@ -101,6 +102,7 @@ class SelectTableScreen extends StatelessWidget {
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/rectangle6.png',
+                                //isAvailable: true,
                                 width: 90,
                                 height: 90,
                               ),
@@ -109,19 +111,20 @@ class SelectTableScreen extends StatelessWidget {
                         ),
                         // Second row
                         Positioned(
-                          top: h * 0.14,
-                          left: w * 0.02,
+                          top: h * 0.11,
+                          left: w * 0.03,
                           child: Row(
                             children: [
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/square4.png',
-      
+                                //isAvailable: true,
                               ),
                               SizedBox(width: w * 0.02),
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle4.png',
+                               // isAvailable: true,
                                 width: 90,
                                 height: 90,
                               ),
@@ -130,11 +133,12 @@ class SelectTableScreen extends StatelessWidget {
                         ),
                         // Large round table right
                         Positioned(
-                          top: h * 0.06,
+                          top: h * 0.05,
                           right: w * 0.05,
                           child: CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle6.png',
+                               // isAvailable: true,
                                 width: 90,
                                 height: 90,
                               ),
@@ -152,7 +156,7 @@ class SelectTableScreen extends StatelessWidget {
 
                 // R2/AC
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade400),
@@ -170,16 +174,19 @@ class SelectTableScreen extends StatelessWidget {
                                   CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: false,
                                   ),
                                   SizedBox(width: w * 0.02),
                                   CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: true,
                                   ),
                                   SizedBox(width: w * 0.02),
                                   CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: true,
                                   ),
                                 ],
                               ),
@@ -188,27 +195,51 @@ class SelectTableScreen extends StatelessWidget {
                            ),
                          ),
                         Positioned(
-                          top: h * 0.10,
+                          top: h * 0.075,
                           left: w * 0.02,
                           child: Row(
                             children: [
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/square4.png',
+                                //isAvailable: false,
                               ),
                               SizedBox(width: w * 0.02),
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle4.png', 
-                                width: 90,
-                                height: 90,
+                                //isAvailable: true,
+                                width: 80,
+                                height: 80,
                               ),
                               SizedBox(width: w*0.02),
                             ],
                           ),
                         ),
                          Positioned(
-                          top: h * 0.19,
+                          top: h * 0.165,
+                          left: w * 0.02,
+                          child: Row(
+                            children: [
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/square4.png',
+                                //isAvailable: false,
+                              ),
+                              SizedBox(width: w * 0.02),
+                              CustomTableImageWidget(
+                                label: 'R413',
+                                imagePath: 'assets/images/circle4.png',
+                               // isAvailable: true,
+                                width: 80,
+                                height:80,
+                              ),
+                              SizedBox(width: w*0.02),
+                            ],
+                          ),
+                        ),
+                         Positioned(
+                          top: h * 0.255,
                           left: w * 0.02,
                           child: Row(
                             children: [
@@ -220,28 +251,8 @@ class SelectTableScreen extends StatelessWidget {
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle4.png',
-                                width: 90,
-                                height:90,
-                              ),
-                              SizedBox(width: w*0.02),
-                            ],
-                          ),
-                        ),
-                         Positioned(
-                          top: h * 0.28,
-                          left: w * 0.02,
-                          child: Row(
-                            children: [
-                              CustomTableImageWidget(
-                                label: 'R413',
-                                imagePath: 'assets/images/square4.png',
-                              ),
-                              SizedBox(width: w * 0.02),
-                              CustomTableImageWidget(
-                                label: 'R413',
-                                imagePath: 'assets/images/circle4.png',
-                                width: 90,
-                                height: 90,
+                                width: 80,
+                                height: 80,
                               ),
                               SizedBox(width: w*0.02),
                             ],
@@ -250,28 +261,31 @@ class SelectTableScreen extends StatelessWidget {
 
                         // Right vertical tables
                         Positioned(
-                          top: h * 0.03,
-                          right: w * 0.03,
+                          top: h * 0.10,
+                          left: w * 0.5,
                           child: Column(
                             children: [
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle6.png',
-                                width: 100,
-                                height: 100,                              ),
+                                //isAvailable: true,
+                                width: 80,
+                                height:80,                             
+                                 ),
                               SizedBox(height: h * 0.02),
                               CustomTableImageWidget(
                                 label: 'R413',
                                 imagePath: 'assets/images/circle6.png',
-                                width: 100,
-                                height: 100,
+                                //isAvailable: false,
+                                width: 80,
+                                height: 80,
                               ),
                             ],
                           ),
                         ),
                         Positioned(
-                            top: h * 0.05,
-                            right: w * 0.05,
+                            top: h * 0.065,
+                            right: w * 0.04,
                             child: Column(
                               children: [
                                 RotatedBox(
@@ -279,6 +293,7 @@ class SelectTableScreen extends StatelessWidget {
                                   child: CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: true,
                                   ),
                                 ),
                                 SizedBox(height: h * 0.02),
@@ -287,6 +302,7 @@ class SelectTableScreen extends StatelessWidget {
                                   child: CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: false,
                                   ),
                                 ),
                                 SizedBox(height: h * 0.02),
@@ -295,6 +311,7 @@ class SelectTableScreen extends StatelessWidget {
                                   child: CustomTableImageWidget(
                                     label: 'R413',
                                     imagePath: 'assets/images/rectangle4.png',
+                                    //isAvailable: true,
                                   ),
                                 ),
                               ],
@@ -322,7 +339,7 @@ class SelectTableScreen extends StatelessWidget {
                     child: Stack(
                       children: [
                         Positioned(
-                          top: h * 0.01,
+                          top: h * 0.015,
                           left: w * 0.02,
                           child: Row(
                             children: [
@@ -335,14 +352,14 @@ class SelectTableScreen extends StatelessWidget {
                                     height: 40,
                                   ),
                                 ),
-                              SizedBox(width: w * 0.02),
+                              SizedBox(width: w * 0.03),
                               CustomTableImageWidget(
                                 label: 'R111',
                                 imagePath: 'assets/images/circle2.png',
                                 width: 40,
                                 height: 40,
                               ),
-                              SizedBox(width: w * 0.02),
+                              SizedBox(width: w * 0.03),
                               CustomTableImageWidget(
                                 label: 'R112',
                                 imagePath: 'assets/images/square2.png',
@@ -353,7 +370,7 @@ class SelectTableScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: h * 0.07,
+                          top: h * 0.08,
                           left: w * 0.02,
                           child: Row(
                             children: [
@@ -366,14 +383,14 @@ class SelectTableScreen extends StatelessWidget {
                                     height: 40,
                                   ),
                                 ),
-                              SizedBox(width: w * 0.02),
+                              SizedBox(width: w * 0.03),
                               CustomTableImageWidget(
                                 label: 'R112',
                                 imagePath: 'assets/images/square2.png',
                                 width: 40,
                                 height: 40,
                               ),
-                              SizedBox(width: w * 0.02),
+                              SizedBox(width: w * 0.03),
                               CustomTableImageWidget(
                                 label: 'R111',
                                 imagePath: 'assets/images/circle2.png',
@@ -384,7 +401,7 @@ class SelectTableScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: h * 0.13,
+                          top: h * 0.15,
                           left: w * 0.02,
                           child: Row(
                             children: [
@@ -394,7 +411,7 @@ class SelectTableScreen extends StatelessWidget {
                                 width: 40,
                                 height: 40,
                               ),
-                              SizedBox(width: w * 0.02),
+                              SizedBox(width: w * 0.03),
                               CustomTableImageWidget(
                                 label: 'R111',
                                 imagePath: 'assets/images/circle2.png',
