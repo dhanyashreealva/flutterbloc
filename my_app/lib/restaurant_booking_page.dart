@@ -11,7 +11,7 @@ class RestaurantBookingPage extends StatelessWidget {
     '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
     '07:00 PM', '07:30 PM', '08:00 PM', '09:30 PM'
   ];
-
+final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,7 +27,7 @@ class RestaurantBookingPage extends StatelessWidget {
                 children: [
                   Container(
                     color: const Color.fromRGBO(226, 161, 70, 1),
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -35,7 +35,7 @@ class RestaurantBookingPage extends StatelessWidget {
                           children: const [
                             Icon(Icons.arrow_back),
                             Spacer(),
-                            Icon(Icons.home),
+                            Icon(Icons.home_outlined),
                           ],
                         ),
                         const Text(
@@ -54,7 +54,7 @@ class RestaurantBookingPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 6),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: Colors.grey.shade400),
                               ),
                               child: SizedBox(
@@ -83,7 +83,7 @@ class RestaurantBookingPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 6),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: Colors.grey.shade400),
                               ),
                               child: SizedBox(
@@ -112,7 +112,7 @@ class RestaurantBookingPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 6),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: Colors.grey.shade400),
                               ),
                               child: SizedBox(
@@ -144,7 +144,7 @@ class RestaurantBookingPage extends StatelessWidget {
                   // Available time slots section
                   if (state.timeSlots.isNotEmpty) ...[
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -154,19 +154,23 @@ class RestaurantBookingPage extends StatelessWidget {
                       ),
                     ),
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
+                      spacing: 16,
+                      runSpacing: 16,
                       children: state.timeSlots.map((slot) {
                         final isSelected = slot == state.selectedSlot;
+                        final isDisabled = disabledSlots.contains(slot);
                         return GestureDetector(
-                          onTap: () => bloc.add(TimeSlotTapped(slot)),
+                          onTap: isDisabled ? null
+                          :() => bloc.add(TimeSlotTapped(slot)),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: isSelected ? Colors.green.shade800 : Colors.white,
-                              borderRadius: BorderRadius.circular(20), // pill shape
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration( 
+                              color: isDisabled ?
+                               Colors.grey.shade200 // light grey background for disabled
+                              : isSelected ? Colors.black : Colors.white,
+                              borderRadius: BorderRadius.circular(10), // pill shape
                               border: Border.all(
-                                color: isSelected ? Colors.green.shade800 : Colors.grey.shade400,
+                                color: isSelected ? Colors.black : Colors.grey.shade400,
                               ),
                             ),
                             child: Text(
@@ -195,7 +199,7 @@ class RestaurantBookingPage extends StatelessWidget {
                               ? Colors.green.shade800
                               : Colors.green.shade200,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                           elevation: 2,
                         ),
