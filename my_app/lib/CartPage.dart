@@ -42,7 +42,8 @@ class CartPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7), // reduced vertical padding
+      margin:EdgeInsets.only(top:8),
       child: Row(
         children: [
           GestureDetector(
@@ -79,17 +80,16 @@ class CartPage extends StatelessWidget {
             'The Grand Kitchen–Multi Cuisine Restaurant',
             style: TextStyle(
               color: Colors.brown.shade400,
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 6),
           Center(
             child: Container(
-              width: 280,
+              width: 350,
               height: 1,
-              color: Colors.grey.shade400,
+              color: Colors.black,
             ),
           ),
         ],
@@ -204,13 +204,13 @@ class CartPage extends StatelessWidget {
                   height: 16,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.green, width: 2),
+                    border: Border.all(color: const Color.fromARGB(255, 23, 130, 26), width: 2),
                   ),
                   child: Center(
                     child: Container(
                       width: 10,
                       height: 10,
-                      decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+                      decoration: BoxDecoration(color:const Color.fromARGB(255, 23, 130, 26), shape: BoxShape.circle),
                     ),
                   ),
                 )
@@ -219,7 +219,7 @@ class CartPage extends StatelessWidget {
                   height: 16,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.red, width: 2),
+                    border: Border.all(color: const Color.fromARGB(255, 184, 36, 26), width: 2),
                   ),
                   child: Center(
                     child: CustomPaint(
@@ -314,7 +314,7 @@ class CartPage extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: isTotal ? Colors.red : Colors.grey.shade700,
+            color: isTotal ? const Color.fromARGB(255, 201, 38, 26) : Colors.grey.shade700,
             fontSize: isTotal ? 16 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
           ),
@@ -322,7 +322,7 @@ class CartPage extends StatelessWidget {
         Text(
           amount,
           style: TextStyle(
-            color: isTotal ? Colors.red : Colors.grey.shade700,
+            color: isTotal ? const Color.fromARGB(255, 201, 38, 26) : Colors.grey.shade700,
             fontSize: isTotal ? 16 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
           ),
