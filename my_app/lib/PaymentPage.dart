@@ -33,7 +33,7 @@ class _PaymentPageState extends State<PaymentPage> {
         final advanceAmount = cartState.grandTotal * 0.3;
         return Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           margin: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
             color: Colors.green.shade50,
@@ -58,6 +58,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   fontSize: 16,
                 ),
               ),
+              SizedBox(height: 15), 
             ],
           ),
         );
@@ -85,7 +86,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 provider['name']!,
                 style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               trailing: Image.asset(
@@ -120,7 +121,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           'Pay ₹${advanceAmount.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                               color: Colors.white),
                         ),
                       ),
@@ -195,18 +196,19 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Payment'),
+          title:Padding(padding: const EdgeInsets.only(top: 16.0),child: Text('Payment',style: TextStyle(fontWeight:FontWeight.bold),),),
+          
           centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0.5,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back_sharp),
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
@@ -217,7 +219,16 @@ class _PaymentPageState extends State<PaymentPage> {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              Divider(height: 1, thickness: 1, color: Colors.grey.shade300),
+              Center(
+          child: Container(
+              width: 350, 
+            child: Divider(
+             color: Colors.black,
+             thickness: 1,
+             height: 5,
+              ),
+              ),
+              ),
               _buildAmountToPay(),
               BlocBuilder<PaymentBloc, PaymentState>(
                 builder: (context, state) {
