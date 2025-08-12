@@ -34,13 +34,14 @@ class _PaymentPageState extends State<PaymentPage> {
         return Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          margin: EdgeInsets.only(bottom: 16),
+          margin: EdgeInsets.only(top: 8),
           decoration: BoxDecoration(
             color: Colors.green.shade50,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Amount to be paid now',
@@ -57,8 +58,8 @@ class _PaymentPageState extends State<PaymentPage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
+                textAlign: TextAlign.right,
               ),
-              SizedBox(height: 15), 
             ],
           ),
         );
@@ -86,7 +87,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 provider['name']!,
                 style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               trailing: Image.asset(
@@ -142,32 +143,32 @@ class _PaymentPageState extends State<PaymentPage> {
     required Function(bool) onExpand,
     required Widget content,
   }) {
-    return Container(
-      
-      child: ExpansionTile(
-        initiallyExpanded: initiallyExpanded,
-        tilePadding: EdgeInsets.symmetric(horizontal: 0),
-        childrenPadding: EdgeInsets.only(left: 8, right: 8, bottom: 10),
-        title: Row(
-          children: [
-            leadingIcon,
-            SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                ),
+    return Theme(
+    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+    child: ExpansionTile(
+      initiallyExpanded: initiallyExpanded,
+      tilePadding: EdgeInsets.symmetric(horizontal: 0),
+      childrenPadding: EdgeInsets.only(left: 8, right: 8, bottom: 10),
+      title: Row(
+        children: [
+          leadingIcon,
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 17,
               ),
             ),
-          ],
-        ),
-        onExpansionChanged: onExpand,
-        children: [content],
+          ),
+        ],
       ),
-    );
-  }
+      onExpansionChanged: onExpand,
+      children: [content],
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +197,7 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title:Padding(padding: const EdgeInsets.only(top: 16.0),child: Text('Payment',style: TextStyle(fontWeight:FontWeight.bold),),),
+          title:Padding(padding: const EdgeInsets.only(top: 35.0),child: Text('Payment',style: TextStyle(fontWeight:FontWeight.bold),),),
           
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -219,15 +220,15 @@ class _PaymentPageState extends State<PaymentPage> {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              Center(
-          child: Container(
-              width: 350, 
-            child: Divider(
-             color: Colors.black,
-             thickness: 1,
-             height: 5,
-              ),
-              ),
+                      Center(
+                child: Container(
+                  width: 350, 
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 1,
+                    height: 1,
+                  ),
+                ),
               ),
               _buildAmountToPay(),
               BlocBuilder<PaymentBloc, PaymentState>(
