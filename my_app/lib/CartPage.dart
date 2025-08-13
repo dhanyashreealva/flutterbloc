@@ -43,12 +43,12 @@ class CartPage extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7), // reduced vertical padding
-      margin:EdgeInsets.only(top:8),
+      margin:EdgeInsets.only(top:10),
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Icon(Icons.arrow_back, color: Colors.black, size: 24),
+            onTap: () => Navigator.pushNamed(context, '/MenuPage'),
+            child: Icon(Icons.arrow_back, color: Colors.black, size: 30),
           ),
           Expanded(
             child: Text(
@@ -73,14 +73,14 @@ class CartPage extends StatelessWidget {
   /// 🔧 EDITED SECTION: Centered line under restaurant name
   Widget _buildRestaurantName() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: Column(
         children: [
           Text(
             'The Grand Kitchen–Multi Cuisine Restaurant',
             style: TextStyle(
               color: Colors.brown.shade400,
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
@@ -208,8 +208,8 @@ class CartPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Container(
-                      width: 10,
-                      height: 10,
+                      width: 8,
+                      height: 8,
                       decoration: BoxDecoration(color:const Color.fromARGB(255, 23, 130, 26), shape: BoxShape.circle),
                     ),
                   ),
@@ -223,7 +223,7 @@ class CartPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: CustomPaint(
-                      size: Size(10, 10),
+                      size: Size(9, 9),
                       painter: _RedTrianglePainter(),
                     ),
                   ),
@@ -273,7 +273,7 @@ class CartPage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF2E7D32),
+                    backgroundColor: Color.fromARGB(255, 37, 116, 41),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -281,20 +281,14 @@ class CartPage extends StatelessWidget {
                     elevation: 0,
                   ),
                   onPressed: state.cartItems.isNotEmpty
-                      ? () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Proceeding to checkout...'),
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        }
-                      : null,
+                                    ? ()  {
+                      Navigator.pushNamed(context, '/confirmation');
+                    }
+                  : null,
                   child: Text(
                     'NEXT',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -336,9 +330,9 @@ class _RedTrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.red
+      ..color = const Color.fromARGB(255, 184, 36, 26)
       ..style = PaintingStyle.fill;
-
+ 
     final path = Path();
     path.moveTo(size.width / 2, 0);
     path.lineTo(size.width, size.height);
