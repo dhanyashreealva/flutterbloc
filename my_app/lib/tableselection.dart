@@ -449,7 +449,7 @@ class SelectTableScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 45,
                   child: ElevatedButton(
-                    onPressed: () => print("Next button pressed"),
+                    onPressed: () => Navigator.pushNamed(context, '/confirmation'),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800]),
                     child: const Text(
                       'NEXT',

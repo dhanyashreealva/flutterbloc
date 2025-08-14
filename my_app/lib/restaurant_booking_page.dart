@@ -203,7 +203,7 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                           ),
                           elevation: 2,
                         ),
-                        onPressed: state.selectedSlot.isNotEmpty ? () {} : null,
+                        onPressed: state.selectedSlot.isNotEmpty ? () {Navigator.pushNamed(context, '/Tableselection');} : null,
                         child: const Text(
                           'NEXT',
                           style: TextStyle(
