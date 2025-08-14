@@ -292,17 +292,23 @@ class _CartLikeScreenState extends State<CartLikeScreen> {
       ),
 
       // Cart bar
-      bottomNavigationBar: Container(
-        height: 55,
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: const Color(0xFFB97A3B),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: const Center(
-          child: Icon(Icons.shopping_cart, color: Colors.white),
-        ),
-      ),
+      bottomNavigationBar: GestureDetector(
+  onTap: () {
+    Navigator.pushNamed(context, '/cart'); 
+  },
+  child: Container(
+    height: 55,
+    margin: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: const Color(0xFFB97A3B),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: const Center(
+      child: Icon(Icons.shopping_cart, color: Colors.white),
+    ),
+  ),
+),
+
     );
   }
 

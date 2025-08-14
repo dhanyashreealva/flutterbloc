@@ -449,11 +449,20 @@ class SelectTableScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 45,
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pushNamed(context, '/confirmation'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800]),
+                    onPressed: () => Navigator.pushNamed(context, '/MenuPage'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[800],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15), // Adjust corner roundness
+                      ),
+                    ),
                     child: const Text(
                       'NEXT',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
