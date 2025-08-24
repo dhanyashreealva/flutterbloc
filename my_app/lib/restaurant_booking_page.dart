@@ -33,9 +33,9 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                       children: [
                         Row(
                           children: const [
-                            Icon(Icons.arrow_back),
+                            Icon(Icons.arrow_back,size: 36),
                             Spacer(),
-                            Icon(Icons.home_outlined),
+                            Icon(Icons.home_outlined,size: 36),
                           ],
                         ),
                         const Text(

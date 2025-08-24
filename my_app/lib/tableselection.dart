@@ -57,13 +57,13 @@ class SelectTableScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black,size: 36),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black),
-            onPressed: () => print("Home pressed"),
+            icon: const Icon(Icons.home_outlined, color: Colors.black,size: 36),
+            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
           ),
         ],
       ),

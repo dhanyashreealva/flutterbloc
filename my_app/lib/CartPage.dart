@@ -62,7 +62,7 @@ class CartPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('/confirmation'),
+            onTap: () => Navigator.of(context).pushNamed('/booking'),
             child: Icon(Icons.home_outlined, color: Colors.black, size: 36),
           ),
         ],
@@ -70,7 +70,6 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  /// 🔧 EDITED SECTION: Centered line under restaurant name
   Widget _buildRestaurantName() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
