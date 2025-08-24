@@ -204,12 +204,12 @@ class _PaymentPageState extends State<PaymentPage> {
           foregroundColor: Colors.black,
           elevation: 0.5,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_sharp),
+            icon: Icon(Icons.arrow_back_sharp,size: 36),
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(Icons.home_outlined,size:36),
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },

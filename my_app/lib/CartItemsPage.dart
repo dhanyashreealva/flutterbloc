@@ -14,7 +14,7 @@ class CartItemsPage extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: Icon(Icons.arrow_back, color: Colors.black,size: 36),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
@@ -28,7 +28,7 @@ class CartItemsPage extends StatelessWidget {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.home_outlined, color: Colors.black),
+              icon: Icon(Icons.home_outlined, color: Colors.black,size: 36),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
             ),
           ],

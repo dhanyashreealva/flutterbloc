@@ -48,7 +48,7 @@ class CartPage extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/MenuPage'),
-            child: Icon(Icons.arrow_back, color: Colors.black, size: 30),
+            child: Icon(Icons.arrow_back, color: Colors.black, size: 36),
           ),
           Expanded(
             child: Text(
@@ -62,8 +62,8 @@ class CartPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('/'),
-            child: Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            onTap: () => Navigator.of(context).pushNamed('/confirmation'),
+            child: Icon(Icons.home_outlined, color: Colors.black, size: 36),
           ),
         ],
       ),

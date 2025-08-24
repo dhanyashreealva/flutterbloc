@@ -58,7 +58,7 @@ class ReservationConfirmationPage extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () => Navigator.of(context).pop(),
-            child: Icon(Icons.arrow_back, color: Colors.black, size: 24),
+            child: Icon(Icons.arrow_back, color: Colors.black, size: 36),
           ),
           Expanded(
             child: Text(
@@ -69,7 +69,7 @@ class ReservationConfirmationPage extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).pushNamed('/'),
-            child: Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            child: Icon(Icons.home_outlined, color: Colors.black, size: 36),
           ),
         ],
       ),
