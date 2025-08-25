@@ -152,39 +152,7 @@ class ReservationConfirmationPage extends StatelessWidget {
           SizedBox(height: 8),
           GestureDetector(
             onTap: () {
-              String contactNumber = '';
-              showDialog(
-                context: context,
-                builder: (BuildContext dialogContext) {
-                  return AlertDialog(
-                    title: Text('Add Contact Number'),
-                    content: TextField(
-                      keyboardType: TextInputType.phone,
-                      onChanged: (value) {
-                        contactNumber = value;
-                      },
-                      decoration: InputDecoration(hintText: 'Enter contact number'),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          if (contactNumber.isNotEmpty) {
-                            context.read<ReservationConfirmationBloc>().add(AddContactInfo(contactNumber));
-                          }
-                          Navigator.of(dialogContext).pop();
-                        },
-                        child: Text('Save'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(dialogContext).pop();
-                        },
-                        child: Text('Cancel'),
-                      ),
-                    ],
-                  );
-                },
-              );
+              Navigator.pushNamed(context, '/contact'); 
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),

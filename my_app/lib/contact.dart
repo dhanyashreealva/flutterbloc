@@ -15,9 +15,12 @@ class EditContactInfoPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black,size: 36),
           onPressed: () => Navigator.pushNamed(context, '/confirmation'),
         ),
-        title: const Text(
+        title: const Padding(
+          padding: EdgeInsets.only(top: 30),
+          child: Text(
           "Edit contact info",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
         ),
         centerTitle: true,
         actions: [
@@ -27,11 +30,13 @@ class EditContactInfoPage extends StatelessWidget {
           ),
         ],
       ),
+      
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             const Center(
               child: Text(
                 "The Grand Kitchen-Multi Cuisine Restaurant",
