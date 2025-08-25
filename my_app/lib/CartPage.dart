@@ -197,7 +197,9 @@ class CartPage extends StatelessWidget {
               ],
             ),
           ),
-          item.isVeg
+          Column(
+            children: [
+            item.isVeg
               ? Container(
                   width: 16,
                   height: 16,
@@ -227,7 +229,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                 ),
-          SizedBox(width: 12),
+          SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -237,6 +239,8 @@ class CartPage extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   )),
+            ],
+             ),
             ],
           ),
         ],
@@ -275,7 +279,7 @@ class CartPage extends StatelessWidget {
                     backgroundColor: Color.fromARGB(255, 37, 116, 41),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     elevation: 0,
                   ),

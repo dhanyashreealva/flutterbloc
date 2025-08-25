@@ -67,14 +67,30 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
+  // 
   Widget _buildUPIOptions(String? selectedProvider) {
-    return Column(
-      children: upiProviders.map((provider) {
+  return Container(
+    decoration: BoxDecoration(
+      color:Theme.of(context).scaffoldBackgroundColor, 
+      borderRadius: BorderRadius.circular(6),
+      border: Border.all(color: Colors.white),
+    ),
+    child: Column(
+      children: upiProviders.asMap().entries.map((entry) {
+        final index = entry.key;
+        final provider = entry.value;
         final isSelected = selectedProvider == provider['name'];
+
         return Column(
           children: [
+            if (index == 0)
+              Divider(
+                color: Colors.grey.shade400,
+                height: 1,
+                thickness: 1,
+              ),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 0),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8),
               leading: Radio<String>(
                 value: provider['name']!,
                 groupValue: selectedProvider,
@@ -96,13 +112,13 @@ class _PaymentPageState extends State<PaymentPage> {
                 width: 24,
               ),
             ),
-           
             if (isSelected)
               BlocBuilder<CartBloc, CartState>(
                 builder: (context, cartState) {
                   final advanceAmount = cartState.grandTotal * 0.3;
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    padding: const EdgeInsets.only(
+                        left: 12, right: 12, bottom: 10, top: 5),
                     child: SizedBox(
                       width: double.infinity,
                       height: 42,
@@ -115,8 +131,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                         onPressed: () {
                           context.read<PaymentBloc>().add(
-                                ProcessPayment(provider['name']!, advanceAmount),
-                              );
+                              ProcessPayment(provider['name']!, advanceAmount));
                         },
                         child: Text(
                           'Pay ₹${advanceAmount.toStringAsFixed(2)}',
@@ -130,11 +145,22 @@ class _PaymentPageState extends State<PaymentPage> {
                   );
                 },
               ),
+            // Divider only between items, not after the last one
+            if (index != upiProviders.length - 1)
+              Divider(
+                color: Colors.grey,
+                height: 1,
+                thickness: 1,
+                indent: 8,
+                endIndent: 8,
+              ),
           ],
         );
       }).toList(),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildExpansionTile({
     required String title,
@@ -247,6 +273,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   );
                 },
               ),
+              Divider(thickness: 1, color: Colors.grey.shade300),
               _buildExpansionTile(
                 title: 'Credit/Debit/ATM Card',
                 leadingIcon: Icon(Icons.credit_card, size: 20),
@@ -255,6 +282,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     _onExpansionChanged('Credit/Debit/ATM Card', expanded),
                 content: SizedBox(height: 40), // Placeholder for card options
               ),
+              Divider(thickness: 1, color: Colors.grey.shade300),
               _buildExpansionTile(
                 title: 'Net Banking',
                 leadingIcon: Icon(Icons.account_balance, size: 20),
@@ -262,6 +290,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 onExpand: (expanded) => _onExpansionChanged('Net Banking', expanded),
                 content: SizedBox(height: 40), // Placeholder for net banking
               ),
+              Divider(thickness: 1, color: Colors.grey.shade300),
             ],
           ),
         ),

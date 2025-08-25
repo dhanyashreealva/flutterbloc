@@ -15,7 +15,7 @@ class CartItemsPage extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black,size: 36),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pushNamed(context, '/orderSummary'),
           ),
           title: Text(
             'FOOD ITEMS',
@@ -29,7 +29,7 @@ class CartItemsPage extends StatelessWidget {
           actions: [
             IconButton(
               icon: Icon(Icons.home_outlined, color: Colors.black,size: 36),
-              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
+              onPressed: () => Navigator.pushNamed(context, '/booking'),
             ),
           ],
         ),
@@ -83,7 +83,6 @@ class CartItemsPage extends StatelessWidget {
             ],
           ),
         ),
-        // ✅ CHANGED ENDS HERE
       ),
     );
   }
@@ -106,7 +105,7 @@ class CartItemsPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 12),
+          SizedBox(width: 8),
           // Item Details
           Expanded(
             child: Column(
@@ -133,7 +132,9 @@ class CartItemsPage extends StatelessWidget {
             ),
           ),
           // Veg/Non-Veg Indicator
-          item.isVeg
+          Column(
+            children: [
+              item.isVeg
               ? Container(
                   width: 16,
                   height: 16,
@@ -166,7 +167,7 @@ class CartItemsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-          SizedBox(width: 12),
+          SizedBox(width: 20),
           // Quantity
           Text(
             'Quantity: ${item.quantity.toString().padLeft(2, '0')}',
@@ -177,6 +178,8 @@ class CartItemsPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+       ],
       ),
     );
   }
