@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/CartItemsPage.dart';
+import 'package:my_app/contact.dart';
 import 'package:my_app/menuPage.dart';
 //import 'package:my_app/menuPage.dart';
 import 'ReservationConfirmationPage.dart';
@@ -38,8 +39,9 @@ class MyApp extends StatelessWidget {
         title: 'Table Reservation ',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.green),
-        home:RestaurantBookingPage(),
+        home:EditContactInfoPage(),
         routes: {
+          '/contact':(context)=>EditContactInfoPage(),
           '/confirmation': (context) => ReservationConfirmationPage(),
           '/booking': (context) => RestaurantBookingPage(),
           '/payment': (context) => PaymentPage(),

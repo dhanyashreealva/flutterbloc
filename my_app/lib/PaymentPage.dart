@@ -85,7 +85,7 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             if (index == 0)
               Divider(
-                color: Colors.grey.shade400,
+                color: Colors.grey,
                 height: 1,
                 thickness: 1,
               ),
@@ -124,7 +124,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       height: 42,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green.shade700,
+                          backgroundColor: const Color.fromARGB(255, 19, 110, 23),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
                           ),

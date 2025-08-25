@@ -57,7 +57,7 @@ class ReservationConfirmationPage extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => Navigator.of(context).pushNamed('/cart'),
             child: Icon(Icons.arrow_back, color: Colors.black, size: 36),
           ),
           Expanded(
@@ -68,7 +68,7 @@ class ReservationConfirmationPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('/'),
+            onTap: () => Navigator.of(context).pushNamed('/booking'),
             child: Icon(Icons.home_outlined, color: Colors.black, size: 36),
           ),
         ],
@@ -78,7 +78,7 @@ class ReservationConfirmationPage extends StatelessWidget {
 
  Widget _buildRestaurantName(BuildContext context, String? confirmationNumber) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0), // Removed vertical gap
+    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0), 
     child: Text(
       'The Grand Kitchen-Multi Cuisine Restaurant',
       style: TextStyle(
