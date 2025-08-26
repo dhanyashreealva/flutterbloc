@@ -10,7 +10,7 @@ class EditContactInfoPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 60,
+        toolbarHeight: 80,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black,size: 36),
           onPressed: () => Navigator.pushNamed(context, '/confirmation'),
@@ -36,7 +36,7 @@ class EditContactInfoPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             const Center(
               child: Text(
                 "The Grand Kitchen-Multi Cuisine Restaurant",

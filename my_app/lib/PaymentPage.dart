@@ -82,12 +82,14 @@ class _PaymentPageState extends State<PaymentPage> {
         final isSelected = selectedProvider == provider['name'];
 
         return Column(
-          children: [men
+          children: [
             if (index == 0)
               Divider(
                 color: Colors.grey,
                 height: 1,
                 thickness: 1,
+                indent: 8,
+                endIndent: 8,
               ),
             ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 8),
