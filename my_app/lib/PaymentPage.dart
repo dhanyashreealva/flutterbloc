@@ -82,7 +82,7 @@ class _PaymentPageState extends State<PaymentPage> {
         final isSelected = selectedProvider == provider['name'];
 
         return Column(
-          children: [
+          children: [men
             if (index == 0)
               Divider(
                 color: Colors.grey,
@@ -146,7 +146,6 @@ class _PaymentPageState extends State<PaymentPage> {
                 },
               ),
             // Divider only between items, not after the last one
-            if (index != upiProviders.length - 1)
               Divider(
                 color: Colors.grey,
                 height: 1,

@@ -31,10 +31,18 @@ class _CartLikeScreenState extends State<CartLikeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        
-                        Icon(Icons.arrow_back_sharp, size: 36),
-                        
-                        Icon(Icons.home_outlined, size: 36),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/Tableselection');
+                          },
+                        child: const Icon(Icons.arrow_back_sharp, size: 36),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/booking');
+                          },
+                        child: const Icon(Icons.home_outlined, size: 36),
+                        ),
                       ],
                     ),
                   ),
