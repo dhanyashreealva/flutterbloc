@@ -10,46 +10,54 @@ class EditContactInfoPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 80,
+        toolbarHeight: 60, // slightly smaller height to match screenshot
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black,size: 36),
+          icon: const Icon(Icons.arrow_back, color: Colors.black, size: 36),
           onPressed: () => Navigator.pushNamed(context, '/confirmation'),
         ),
-        title: const Padding(
-          padding: EdgeInsets.only(top: 30),
-          child: Text(
-          "Edit contact info",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        title:Padding(padding: const EdgeInsets.only(top: 30),
+        child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              "Edit contact info",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+              ),
+            ),
+            SizedBox(height: 12),
+            Text(
+              "The Grand Kitchen-Multi Cuisine Restaurant",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible, // 👈 force full one-line text
+              maxLines: 1,                     // 👈 only one line
+              softWrap: false, 
+            ),
+          ],
         ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black,size: 36),
+            icon: const Icon(Icons.home_outlined, color: Colors.black, size: 36),
             onPressed: () => Navigator.pushNamed(context, '/booking'),
           ),
         ],
       ),
       
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 8),
-            const Center(
-              child: Text(
-                "The Grand Kitchen-Multi Cuisine Restaurant",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
             const SizedBox(height: 40),
-
             const Text(
               "Contact Info",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -66,7 +74,8 @@ class EditContactInfoPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 12),
                     ),
                   ),
                 ),
@@ -78,7 +87,8 @@ class EditContactInfoPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 12),
                     ),
                   ),
                 ),
@@ -123,7 +133,8 @@ class EditContactInfoPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () => Navigator.pushNamed(context, '/confirmation'),
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/confirmation'),
                 child: const Text(
                   "Update",
                   style: TextStyle(fontSize: 16, color: Colors.white),
