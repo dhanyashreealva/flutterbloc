@@ -10,14 +10,14 @@ class EditContactInfoPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 60, // slightly smaller height to match screenshot
+        toolbarHeight: 70, // slightly smaller height to match screenshot
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black, size: 36),
           onPressed: () => Navigator.pushNamed(context, '/confirmation'),
         ),
         title:Padding(padding: const EdgeInsets.only(top: 30),
         child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: const [
             Text(
               "Edit contact info",
@@ -27,7 +27,7 @@ class EditContactInfoPage extends StatelessWidget {
                 fontSize: 22,
               ),
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 4),
             Text(
               "The Grand Kitchen-Multi Cuisine Restaurant",
               style: TextStyle(
@@ -53,11 +53,10 @@ class EditContactInfoPage extends StatelessWidget {
       ),
       
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
             const Text(
               "Contact Info",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
