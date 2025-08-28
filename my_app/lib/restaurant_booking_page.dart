@@ -37,12 +37,17 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children:[
                             IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
                               icon: const Icon(Icons.arrow_back,color: Colors.black, size: 36),
                               onPressed:(){
                                 Navigator.pushNamed(context, '/booking');
                               }, 
                             ),
-                            IconButton(icon: const Icon(Icons.home_outlined,color: Colors.black,size: 36),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.home_outlined,color: Colors.black,size: 36),
                             onPressed: (){
                               Navigator.pushNamed(context, '/booking');
                             },

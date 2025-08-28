@@ -24,34 +24,48 @@ class AdditemsPage extends StatelessWidget {
     );
   }
 
+  // 
   Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back, color: Colors.black, size: 36),
-          ),
-          Expanded(
-            child: Text(
-              'ADDED ITEMS',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+  return Column(
+    children: [
+      const SizedBox(height: 18),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/confirmation'),
+              child: const Icon(Icons.arrow_back, color: Colors.black, size: 36),
             ),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('/booking'),
-            child: Icon(Icons.home_outlined, color: Colors.black, size: 36),
-          ),
-        ],
+            const Expanded(
+              child: Text(
+                'ADDED ITEMS',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.of(context).pushNamed('/booking'),
+              child: const Icon(Icons.home_outlined, color: Colors.black, size: 36),
+            ),
+          ],
+        ),
       ),
-    );
-  }
+      Center(
+        child: Container(
+          width: 350, // same fixed width as other sections
+          height: 1,
+          color: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
 
   Widget _buildItemsList() {
     return BlocBuilder<CartBloc, CartState>(
@@ -154,11 +168,10 @@ class AdditemsPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12),
       width: double.infinity,
-      height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green.shade800,
-          padding: EdgeInsets.symmetric(vertical: 14),
+          padding: EdgeInsets.symmetric(vertical: 6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -168,7 +181,7 @@ class AdditemsPage extends StatelessWidget {
         },
         child: Text(
           "ADD ITEMS",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 25,color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
