@@ -85,7 +85,7 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             if (index == 0)
               Divider(
-                color: Colors.grey,
+                color: Colors.grey.shade300,
                 height: 1,
                 thickness: 1,
                 indent: 8,
@@ -149,7 +149,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             // Divider only between items, not after the last one
               Divider(
-                color: Colors.grey,
+                color: Colors.grey.shade300,
                 height: 1,
                 thickness: 1,
                 indent: 8,

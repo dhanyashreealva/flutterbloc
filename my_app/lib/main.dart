@@ -17,6 +17,7 @@ import 'restaurant_booking_page.dart';
 import 'payment_bloc.dart';
 //import 'menuPage.dart';
 import 'tableselection.dart';
+import 'added_items.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           '/cartItems': (context) => CartItemsPage(),
           '/MenuPage':(context)=>CartLikeScreen(),
           '/Tableselection':(context)=>SelectTableScreen(),
+          '/Additems':(context)=>AdditemsPage(),
         },
       ),
     );

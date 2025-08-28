@@ -37,12 +37,12 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children:[
                             IconButton(
-                              icon: const Icon(Icons.arrow_back, size: 36),
+                              icon: const Icon(Icons.arrow_back,color: Colors.black, size: 36),
                               onPressed:(){
                                 Navigator.pushNamed(context, '/booking');
                               }, 
                             ),
-                            IconButton(icon: const Icon(Icons.home_outlined,size: 36),
+                            IconButton(icon: const Icon(Icons.home_outlined,color: Colors.black,size: 36),
                             onPressed: (){
                               Navigator.pushNamed(context, '/booking');
                             },
@@ -211,7 +211,7 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                               ? Colors.green.shade800
                               : Colors.green.shade200,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           elevation: 2,
                         ),

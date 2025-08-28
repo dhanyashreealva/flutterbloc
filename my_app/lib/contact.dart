@@ -133,8 +133,8 @@ class EditContactInfoPage extends StatelessWidget {
                 onPressed: () =>
                     Navigator.pushNamed(context, '/confirmation'),
                 child: const Text(
-                  "Update",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  "UPDATE",
+                  style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
               ),
             ),

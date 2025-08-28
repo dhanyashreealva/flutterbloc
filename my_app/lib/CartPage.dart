@@ -42,8 +42,8 @@ class CartPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7), // reduced vertical padding
-      margin:EdgeInsets.only(top:10),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2), // reduced vertical padding
+      //margin:EdgeInsets.only(top:10),
       child: Row(
         children: [
           GestureDetector(

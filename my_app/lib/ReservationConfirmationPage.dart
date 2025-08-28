@@ -103,9 +103,7 @@ class ReservationConfirmationPage extends StatelessWidget {
           SizedBox(height: 8),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => CartPage()),
-              );
+              Navigator.pushNamed(context, '/Additems'); 
             },
             child: Row(
               children: [
@@ -175,7 +173,7 @@ class ReservationConfirmationPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade600),
+                  Icon(Icons.arrow_back, size: 16, color: Colors.grey.shade600),
                 ],
               ),
             ),

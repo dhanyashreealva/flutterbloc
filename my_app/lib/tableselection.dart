@@ -447,13 +447,13 @@ class SelectTableScreen extends StatelessWidget {
                 // Next button
                 SizedBox(
                   width: double.infinity,
-                  height: 45,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/MenuPage'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green.shade800,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15), // Adjust corner roundness
+                        borderRadius: BorderRadius.circular(10), 
                       ),
                     ),
                     child: const Text(
