@@ -31,12 +31,24 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          children: const [
-                            Icon(Icons.arrow_back,size: 36),
-                            Spacer(),
-                            Icon(Icons.home_outlined,size: 36),
-                          ],
+                        Transform.translate(
+                          offset: const Offset(0, -8), 
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children:[
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back, size: 36),
+                              onPressed:(){
+                                Navigator.pushNamed(context, '/booking');
+                              }, 
+                            ),
+                            IconButton(icon: const Icon(Icons.home_outlined,size: 36),
+                            onPressed: (){
+                              Navigator.pushNamed(context, '/booking');
+                            },
+                            ),
+                            ],
+                          ),
                         ),
                         const Text(
                           "The Grand Kitchen-Multi Cuisine",
@@ -207,7 +219,7 @@ final disabledSlots = ['05:00 PM','07:00 PM', '08:00 PM'];
                         child: const Text(
                           'NEXT',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),

@@ -139,7 +139,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           'Pay ₹${advanceAmount.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
                       ),

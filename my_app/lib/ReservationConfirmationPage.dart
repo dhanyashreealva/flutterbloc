@@ -275,7 +275,7 @@ class ReservationConfirmationPage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, '/payment');
           },
-          child: Text('PROCEED TO PAY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+          child: Text('PROCEED TO PAY', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)),
         ),
       ),
     );

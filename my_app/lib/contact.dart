@@ -7,41 +7,22 @@ class EditContactInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 70, // slightly smaller height to match screenshot
+        toolbarHeight: 60,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black, size: 36),
           onPressed: () => Navigator.pushNamed(context, '/confirmation'),
         ),
-        title:Padding(padding: const EdgeInsets.only(top: 30),
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            Text(
-              "Edit contact info",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: 22,
-              ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              "The Grand Kitchen-Multi Cuisine Restaurant",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.visible, // 👈 force full one-line text
-              maxLines: 1,                     // 👈 only one line
-              softWrap: false, 
-            ),
-          ],
-        ),
+        title: const Text(
+          "Edit contact info",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 22,
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -51,12 +32,29 @@ class EditContactInfoPage extends StatelessWidget {
           ),
         ],
       ),
-      
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+           // const SizedBox(height: 10),
+
+            
+            const Center(
+              child: Text(
+                "The Grand Kitchen-Multi Cuisine Restaurant",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            const SizedBox(height: 60),
+
             const Text(
               "Contact Info",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -127,7 +125,7 @@ class EditContactInfoPage extends StatelessWidget {
               height: 48,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFB87419), // brown-orange
+                  backgroundColor: const Color(0xFFB87419),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

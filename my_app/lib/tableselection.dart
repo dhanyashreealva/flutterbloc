@@ -58,12 +58,12 @@ class SelectTableScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black,size: 36),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pushNamed('/booking'),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.home_outlined, color: Colors.black,size: 36),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false),
+            onPressed: () => Navigator.of(context).pushNamed('/booking'),
           ),
         ],
       ),
@@ -451,7 +451,7 @@ class SelectTableScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/MenuPage'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[800],
+                      backgroundColor: Colors.green.shade800,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15), // Adjust corner roundness
                       ),
@@ -459,7 +459,7 @@ class SelectTableScreen extends StatelessWidget {
                     child: const Text(
                       'NEXT',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
