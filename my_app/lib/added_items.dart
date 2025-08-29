@@ -31,7 +31,7 @@ Widget _buildHeader(BuildContext context) {
     children: [
       const SizedBox(height: 12),
       SizedBox(
-        height: 50, // fixed height for header bar
+        height: 30, // fixed                                                                                                                                                                                                                                     height for header bar
         child: Stack(
           children: [
             // Back Arrow (Top Left)
