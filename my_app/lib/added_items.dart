@@ -25,39 +25,56 @@ class AdditemsPage extends StatelessWidget {
   }
 
   // 
-  Widget _buildHeader(BuildContext context) {
+//   
+Widget _buildHeader(BuildContext context) {
   return Column(
     children: [
-      const SizedBox(height: 18),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-        child: Row(
+      const SizedBox(height: 12),
+      SizedBox(
+        height: 50, // fixed height for header bar
+        child: Stack(
           children: [
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/confirmation'),
-              child: const Icon(Icons.arrow_back, color: Colors.black, size: 36),
+            // Back Arrow (Top Left)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/confirmation'),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Icon(Icons.arrow_back, color: Colors.black, size: 32),
+                ),
+              ),
             ),
-            const Expanded(
+
+            // Center Title
+            Center(
               child: Text(
                 'ADDED ITEMS',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('/booking'),
-              child: const Icon(Icons.home_outlined, color: Colors.black, size: 36),
+
+            // Home Icon (Top Right)
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).pushNamed('/booking'),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Icon(Icons.home_outlined, color: Colors.black, size: 32),
+                ),
+              ),
             ),
           ],
         ),
       ),
       Center(
         child: Container(
-          width: 350, // same fixed width as other sections
+          width: 350,
           height: 1,
           color: Colors.black,
         ),
@@ -65,7 +82,6 @@ class AdditemsPage extends StatelessWidget {
     ],
   );
 }
-
 
   Widget _buildItemsList() {
     return BlocBuilder<CartBloc, CartState>(
